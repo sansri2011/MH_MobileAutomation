@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Mobile Tests">
+    <listeners>
+        <listener class-name="org.magellanhealth.Listeners.TestListener"/>
+    </listeners>
+
+    <test name="Test cases" parallel="none" thread-count="1">
+        <classes>
+            <class name="org.magellanhealth.testcases.LoginPageTest">
+                <methods>
+                    <include name="verifySignInScreen"/>
+                    <include name="loginAndValidateTest"/>
+                    <include name="verifyEmailKeyboard"/>
+                    <include name="emailKeyboardAppears"/>
+                    <include name="pwdKeyboardAppears"/>
+                    <include name="usernameAccept50char"/>
+                    <include name="InvalidEmailTest"/>
+                    <include name="checkCopyPateMoreThan50Char"/>
+                    <include name="InvalidLoginTest"/>
+                    <include name="InvalidPasswordTest"/>
+                    <include name="InvalidUserAndPass"/>
+                    <include name="InvalidPassword"/>
+                    <include name="InvalidCredentialsTest"/>
+                    <include name="SignInStateAfterClearingField"/>
+                    <include name="skipTutorialTest"/>
+                    <include name="notDisplayOnboardingScreenTest"/>
+                    <include name="validateForgotPasswordTest"/>
+                    <include name="validateSignInOnLockedScreenTest"/>
+                    <include name="validateForgotPasswordTest"/>
+                    <include name="validateContinueBtnStateAfterEnteringEmailInForgotPwd"/>
+                    <include name="verifyForgotPasswordEmail"/>
+                </methods>
+            </class>
+        </classes>
+
+    </test>
+</suite>

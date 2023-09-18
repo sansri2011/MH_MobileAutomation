@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="2" name="Mobile" parallel="tests">
+
+
+    <test name="Android AppTest 1" enabled="false">
+        <parameter name="version" value="11"/>
+        <parameter name="platform" value="Android"/>
+        <parameter name="device" value="Galaxy S21 Ultra 5G"/>
+        <classes>
+            <class name="org.magellanhealth.driverManager.AndroidApp"/>
+        </classes>
+    </test>
+
+    <test name="Android AppTest 2" enabled="false">
+        <parameter name="version" value="11"/>
+        <parameter name="platform" value="Android"/>
+        <parameter name="device" value="Galaxy S21"/>
+        <classes>
+            <class name="org.magellanhealth.driverManager.AndroidApp"/>
+        </classes>
+    </test>
+
+
+    <test name="iOS AppTest 2" enabled="true">
+        <parameter name="version" value="16"/>
+        <parameter name="platform" value="iOS"/>
+        <parameter name="device" value="iPhone 14 Pro"/>
+        <classes>
+            <class name="org.magellanhealth.driverManager."/>
+        </classes>
+    </test>
+
+
+</suite>
