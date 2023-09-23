@@ -106,18 +106,18 @@ public class LoginPage extends NativeBasePage {
     }
 
     public ForgotPasswordPage verifyEmailIdAccept50Char() {
-        String data = "Myr98lgD0jPqTzqMhKm2JEItOk6YDxDJxaYigLbWHlYXbj4we";
-        try {
+        String expected = "Myr98lgD0jPqTzqMhKm2JEItOk6YDxDJxaYigLbWHlYXbj4we";
+
             click(email, "username");
-        } catch (Exception e) {
-            e.getMessage();
-            sendTextUsingJS(data);
-            if (email.getText().replace("Email: ", "").trim().equalsIgnoreCase(data)) {
+            sendTextUsingJS(expected);
+            ExtentLogger.info("Entered text");
+            WaitHelpers.waitTime(5);
+        String actual = email.getText().replace("Email: ", "").trim();
+        if (actual.equalsIgnoreCase(expected)) {
                 ExtentLogger.pass("50 char accepted");
             } else {
-                Assert.assertFalse(false, "50 char not accepted");
+                Assert.assertEquals(actual,expected);
             }
-        }
         return null;
     }
 

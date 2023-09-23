@@ -98,4 +98,14 @@ public class ForgotPasswordPage extends LoginPage {
         return this;
     }
 
+    public ForgotPasswordPage continueBtnState(){
+        if(continueOnForgotBtn.isDisplayed() && continueOnForgotBtn.isEnabled()){
+            ExtentLogger.pass("Continue button displayed and enable");
+        }else {
+            ExtentLogger.fail("Continue button not displayed or enabled");
+        }
+
+        return this;
+    }
+
 }

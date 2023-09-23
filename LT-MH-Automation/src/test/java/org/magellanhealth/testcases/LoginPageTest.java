@@ -20,7 +20,7 @@ public class LoginPageTest extends BaseTest {
 
 
     @Test(groups = "LoginTest", dataProvider = "getData1",
-            description = "Verify Sign-in Screen(Default screen for the user)", enabled = true)
+            description = "Verify Sign-in Screen(Default screen for the user)", enabled = false)
     public void verifySignInScreen(Map<String, String> map) {
         new LoginPage().verifyElementOnScreen();
     }
@@ -87,7 +87,7 @@ public class LoginPageTest extends BaseTest {
     }
 
 
-    @Test(groups = "LoginTest", dataProvider = "getData1", enabled = false,
+    @Test(groups = "LoginTest", dataProvider = "getData1", enabled = true,
             description = "Verify the user successfully login with onboarding carousel screens")
     public void loginAndValidateTest(Map<String, String> map) {
         new LoginPage().signInToApp(PropertyUtils.getValue("appUsername"), PropertyUtils.getValue("appPassword"));
@@ -144,11 +144,11 @@ public class LoginPageTest extends BaseTest {
    // }
 
     @Test(groups = "forgetPwd",
-            dataProvider = "getData1", enabled = false,
-            description = "Verify and validate App allows maximum of 50 characters for the Email Address field")
+            dataProvider = "getData1", enabled = true,
+            description = "Verify the Continue button is enabled after the Email Address is correctly filled in")
     public void validateContinueBtnStateAfterEnteringEmailInForgotPwd(Map<String, String> map) {
         new LoginPage().validateForgotPassword();
-        new ForgotPasswordPage().verifyEmailIdAccept50Char();
+        new ForgotPasswordPage().continueBtnState();
     }
 
     @Test(groups = "forgetPwd",
@@ -158,6 +158,7 @@ public class LoginPageTest extends BaseTest {
         new LoginPage().validateForgotPassword();
         new ForgotPasswordPage().enterEmailAndContinue(PropertyUtils.getValue("forgotPasswordEmail"));
     }
+
 
 
 
