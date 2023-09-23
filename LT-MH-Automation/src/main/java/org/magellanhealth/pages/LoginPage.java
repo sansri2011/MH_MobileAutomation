@@ -97,12 +97,14 @@ public class LoginPage extends NativeBasePage {
         return this;
     }
 
-    public void verifyKeyboardShownForEmail() {
+    public LoginPage verifyKeyboardShownForEmail() {
         CommonPageMethods.verifyKeyboardAppears(email, "username");
+        return this;
     }
 
-    public void verifyKeyboardShownForPassword() {
+    public LoginPage verifyKeyboardShownForPassword() {
         CommonPageMethods.verifyKeyboardAppears(pwd, "password");
+        return this;
     }
 
     public ForgotPasswordPage verifyEmailIdAccept50Char() {
@@ -281,7 +283,7 @@ public class LoginPage extends NativeBasePage {
         return this;
     }
 
-    private LoginPage enterUsername(String enterUsername) {
+    public LoginPage enterUsername(String enterUsername) {
         try {
             WaitHelpers.waitTime(5);
             click(email, "username");
@@ -294,7 +296,7 @@ public class LoginPage extends NativeBasePage {
 
     }
 
-    private LoginPage enterPassword(String enterPwd) {
+    public LoginPage enterPassword(String enterPwd) {
         WaitHelpers.waitTime(5);
         click(pwd, "password");
         sendTextUsingJS(enterPwd);
