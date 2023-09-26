@@ -303,7 +303,7 @@ public class LoginPage extends NativeBasePage {
         return this;
     }
 
-    private LoginPage clickSignIn() {
+    public LoginPage clickSignIn() {
         WaitHelpers.waitTime(5);
         email.click();
         hideKeyboard();
@@ -442,6 +442,7 @@ public class LoginPage extends NativeBasePage {
         WaitHelpers.waitTime(5);
         if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
             click(forgotPwdLink, "forgot password");
+            DriverManager.getDriver().navigate().back();
             ExtentLogger.info("forgot password");
         } else {
             throw new NoSuchScreenException("ForgotPassword btn is not display or enable");
