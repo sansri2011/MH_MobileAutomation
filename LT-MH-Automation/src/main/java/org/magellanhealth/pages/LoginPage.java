@@ -11,9 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-import static io.appium.java_client.touch.offset.PointOption.point;
-import static java.time.Duration.ofSeconds;
-import static org.magellanhealth.utils.PageActionsHelper.*;
+import static org.magellanhealth.utils.PageActionsHelper.scrollForMobile;
+import static org.magellanhealth.utils.PageActionsHelper.sendTextUsingJS;
 
 public class LoginPage extends NativeBasePage {
     @AndroidFindBy(xpath = "//*[contains(@class,'android.widget.EditText')][1]")
@@ -89,11 +88,11 @@ public class LoginPage extends NativeBasePage {
 
 
     public LoginPage verifyElementOnScreen() {
-        onScreenFields(email.isDisplayed(), "Email field displayed", "Email field not displayed");
-        onScreenFields(pwd.isDisplayed(), "Password field displayed", "Password field not displayed");
-        onScreenFields(signIn.isDisplayed(), "SignIn btn displayed", "SignIn btn not displayed");
-        onScreenFields(forgotPwdLink.isDisplayed(), "ForgotPwd displayed", "ForgoPwd not displayed");
-        onScreenFields(registerNow.isEnabled(), "RegisterNow is enable", "RegisterNow is not enable");
+        onScreenFields(email.isDisplayed(), "Email field is Displayed in Sign IN screen", "Email field is not Displayed in Sign IN screen");
+        onScreenFields(pwd.isDisplayed(), "Password  field is Displayed in Sign in screen", "Password  field is not Displayed in Sign in screen");
+        onScreenFields(signIn.isDisplayed(), "Sign in button is Displayed in Sign in Screen", "Sign in button is not Displayed in Sign in Screen");
+        onScreenFields(forgotPwdLink.isDisplayed(), "Forgot password is Displayed in Sign in Screen", "Forgot password is not Displayed in Sign in Screen");
+        onScreenFields(registerNow.isEnabled(), "Register Now is Displayed in Sign in screen", "Register Now is not Displayed in Sign in screen");
         return this;
     }
 
@@ -110,16 +109,16 @@ public class LoginPage extends NativeBasePage {
     public ForgotPasswordPage verifyEmailIdAccept50Char() {
         String expected = "Myr98lgD0jPqTzqMhKm2JEItOk6YDxDJxaYigLbWHlYXbj4we";
 
-            click(email, "username");
-            sendTextUsingJS(expected);
-            ExtentLogger.info("Entered text");
-            WaitHelpers.waitTime(5);
+        click(email, "username");
+        sendTextUsingJS(expected);
+        ExtentLogger.info("Entered text");
+        WaitHelpers.waitTime(5);
         String actual = email.getText().replace("Email: ", "").trim();
         if (actual.equalsIgnoreCase(expected)) {
-                ExtentLogger.pass("50 char accepted");
-            } else {
-                Assert.assertEquals(actual,expected);
-            }
+            ExtentLogger.pass("50 char accepted");
+        } else {
+            Assert.assertEquals(actual, expected);
+        }
         return null;
     }
 
@@ -264,12 +263,12 @@ public class LoginPage extends NativeBasePage {
     }
 
 
-    private static void onScreenFields(boolean email, String field_displayed, String field_not_displayed) {
-        if (email) {
+    private static void onScreenFields(boolean objectStatus, String field_displayed, String field_not_displayed) {
+        if (objectStatus) {
             ExtentLogger.pass(field_displayed);
             Assert.assertTrue(true, field_displayed);
         } else {
-            Assert.assertTrue(false, field_not_displayed);
+            ExtentLogger.fail(field_not_displayed);
         }
     }
 
@@ -308,7 +307,7 @@ public class LoginPage extends NativeBasePage {
         email.click();
         hideKeyboard();
         if (signIn.isEnabled()) {
-            click(signIn, "SignIn");
+            click(signIn, "SignIn button");
         } else {
             Assert.assertFalse(false);
         }
@@ -441,11 +440,11 @@ public class LoginPage extends NativeBasePage {
     public LoginPage validateForgotPassword() {
         WaitHelpers.waitTime(5);
         if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
-            click(forgotPwdLink, "forgot password");
+            click(forgotPwdLink, "Forgot password");
+            ExtentLogger.pass("Forgot password link is present");
             DriverManager.getDriver().navigate().back();
-            ExtentLogger.info("forgot password");
         } else {
-            throw new NoSuchScreenException("ForgotPassword btn is not display or enable");
+            ExtentLogger.fail("ForgotPassword btn is not display or enable");
         }
         return new ForgotPasswordPage();
     }

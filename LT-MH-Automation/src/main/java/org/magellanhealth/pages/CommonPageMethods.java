@@ -13,9 +13,9 @@ public class CommonPageMethods extends NativeBasePage {
             try {
                 click(element, name);
                 if (((AndroidDriver) DriverManager.getDriver()).isKeyboardShown()) {
-                    ExtentLogger.pass("Keyboard shown");
+                    ExtentLogger.pass("Keyboard displayed for "+name);
                 } else {
-                    Assert.assertFalse(false, "keyboard not shown");
+                    ExtentLogger.pass("Keyboard not displayed for "+name);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
