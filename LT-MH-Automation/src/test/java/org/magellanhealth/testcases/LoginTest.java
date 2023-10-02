@@ -15,16 +15,17 @@ public class LoginTest extends BaseTest {
 
 
     @Test(groups = "SmokeTest", dataProvider = "getData1",
-            description = "Verify login page", enabled = false)
+            description = "Verify login page", enabled = true)
     public void verifySignInScreen(Map<String, String> map) {
         new ForgotPasswordPage()
-                .validateForgotPassword();
+                .verifyForgotPasswordLink();
         new LoginPage().verifyElementOnScreen()
                 .verifyKeyboardShownForEmail()
                 .verifyKeyboardShownForPassword()
                 .enterUsername(PropertyUtils.getValue("appUsername7"))
                 .enterPassword(PropertyUtils.getValue("appPassword7"))
                 .clickSignIn();
+
     }
 
 

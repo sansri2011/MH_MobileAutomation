@@ -272,10 +272,20 @@ public class LoginPage extends NativeBasePage {
         }
     }
 
-    public ForgotPasswordPage validateForgotPassword() {
+    public LoginPage verifyForgotPasswordLink() {
         WaitHelpers.waitTime(5);
         if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
             ExtentLogger.pass("Forgot password link is present");
+        } else {
+            ExtentLogger.fail("ForgotPassword link is not display or enable");
+        }
+        return new LoginPage();
+    }
+
+
+    public ForgotPasswordPage validateForgotPassword() {
+        WaitHelpers.waitTime(5);
+        if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
             click(forgotPwdLink, "Forgot password");
         } else {
             ExtentLogger.fail("ForgotPassword link is not display or enable");

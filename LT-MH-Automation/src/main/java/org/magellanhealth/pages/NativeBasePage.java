@@ -51,23 +51,23 @@ public class NativeBasePage {
     }
 
 
-
-
     public static void hideKeyboard() {
         AndroidDriver driver;
         driver = (AndroidDriver) DriverManager.getDriver();
         driver.hideKeyboard();
     }
 
-    protected static void navigateBackward(WebElement validateTextAfterMovingBack, String pageName){
-        DriverManager.getDriver().navigate().back();
-        WaitHelpers.waitTime(5);
-        if (validateTextAfterMovingBack.isDisplayed()) {
-            ExtentLogger.pass("User navigated back successfully from "+pageName+ "page");
-        }else{
-            ExtentLogger.pass("User not navigated back successfully from "+pageName+ "page");
+    protected static void navigateBackward(WebElement validateTextAfterMovingBack, String pageName, Boolean navigateBackTrueFalse) {
+        if (navigateBackTrueFalse) {
+            DriverManager.getDriver().navigate().back();
+        } else {
+            WaitHelpers.waitTime(5);
+            if (validateTextAfterMovingBack.isDisplayed()) {
+                ExtentLogger.pass("User navigated back successfully from " + pageName + "page");
+            } else {
+                ExtentLogger.pass("User not navigated back successfully from " + pageName + "page");
+            }
         }
     }
-
 
 }
