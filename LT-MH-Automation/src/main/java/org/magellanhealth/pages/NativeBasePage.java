@@ -59,5 +59,15 @@ public class NativeBasePage {
         driver.hideKeyboard();
     }
 
+    protected static void navigateBackward(WebElement validateTextAfterMovingBack, String pageName){
+        DriverManager.getDriver().navigate().back();
+        WaitHelpers.waitTime(5);
+        if (validateTextAfterMovingBack.isDisplayed()) {
+            ExtentLogger.pass("User navigated back successfully from "+pageName+ "page");
+        }else{
+            ExtentLogger.pass("User not navigated back successfully from "+pageName+ "page");
+        }
+    }
+
 
 }
