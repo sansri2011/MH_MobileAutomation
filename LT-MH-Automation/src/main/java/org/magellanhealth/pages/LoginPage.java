@@ -272,14 +272,24 @@ public class LoginPage extends NativeBasePage {
         }
     }
 
+    public ForgotPasswordPage validateForgotPassword() {
+        WaitHelpers.waitTime(5);
+        if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
+            ExtentLogger.pass("Forgot password link is present");
+            click(forgotPwdLink, "Forgot password");
+        } else {
+            ExtentLogger.fail("ForgotPassword link is not display or enable");
+        }
+        return new ForgotPasswordPage();
+    }
 
-    public LoginPage signInToApp(String username, String password) {
+    public ForgotPasswordPage signInToApp(String username, String password) {
         enterUsername(username);
         enterPassword(password);
         clickSignIn();
         clickAndValidateNextScreen();
         clickAndValidateGetStartedScreen();
-        return this;
+        return new ForgotPasswordPage();
     }
 
     public LoginPage enterUsername(String enterUsername) {
@@ -306,12 +316,13 @@ public class LoginPage extends NativeBasePage {
         WaitHelpers.waitTime(5);
         email.click();
         hideKeyboard();
-        if (signIn.isEnabled()) {
+        if (signIn.isEnabled() && signIn.isDisplayed()) {
+            ExtentLogger.pass("Sign In button is enable and displayed in Sign in screen");
             click(signIn, "SignIn button");
         } else {
             Assert.assertFalse(false);
         }
-        return this;
+        return new ForgotPasswordPage();
     }
 
 
@@ -434,19 +445,6 @@ public class LoginPage extends NativeBasePage {
         enterPassword(password);
         ExtentLogger.info("Password username");
         clickSignIn();
-    }
-
-
-    public LoginPage validateForgotPassword() {
-        WaitHelpers.waitTime(5);
-        if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
-            click(forgotPwdLink, "Forgot password");
-            ExtentLogger.pass("Forgot password link is present");
-            DriverManager.getDriver().navigate().back();
-        } else {
-            ExtentLogger.fail("ForgotPassword btn is not display or enable");
-        }
-        return new ForgotPasswordPage();
     }
 
 

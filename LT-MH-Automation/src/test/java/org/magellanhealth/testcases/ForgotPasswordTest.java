@@ -11,22 +11,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LoginTest extends BaseTest {
-
+public class ForgotPasswordTest extends BaseTest {
 
     @Test(groups = "SmokeTest", dataProvider = "getData1",
-            description = "Verify login page", enabled = false)
-    public void verifySignInScreen(Map<String, String> map) {
-        new ForgotPasswordPage()
-                .validateForgotPassword();
-        new LoginPage().verifyElementOnScreen()
-                .verifyKeyboardShownForEmail()
-                .verifyKeyboardShownForPassword()
-                .enterUsername(PropertyUtils.getValue("appUsername7"))
-                .enterPassword(PropertyUtils.getValue("appPassword7"))
-                .clickSignIn();
-    }
+            description = "Verify login page", enabled = true)
+    public void verifyForgotPasswordScreen(Map<String, String> map) {
+        String username = PropertyUtils.getValue("appUsername7");
+        String password = PropertyUtils.getValue("appPassword7");
+        new ForgotPasswordPage().
+                validateForgotPassword()
+                .forgotPasswordPageTitle()
+                .enterEmailAndContinue(username)
+                .clickOnReturnToSignIn();
 
+    }
 
 
     @DataProvider(parallel = false)
@@ -36,19 +34,14 @@ public class LoginTest extends BaseTest {
         map.put("os_version", "12");
 
         HashMap<String, String> map2 = new HashMap<>();
-//        map2.put("deviceName", "Galaxy S23+");
-//        map2.put("platformVersion", "13");
-        map2.put("deviceName", "Google Pixel 7 Pro");
-        map2.put("platformVersion", "12");
+
 
         HashMap<String, String> map3 = new HashMap<>();
 //        map3.put("deviceName", "iPhone 14 Pro");
 //        map3.put("platformVersion", "16");
 
         List<Map<String, String>> list = new ArrayList<>();
-        list.add(map);
+        list.add(map2);
         return list.toArray();
     }
-
-
 }

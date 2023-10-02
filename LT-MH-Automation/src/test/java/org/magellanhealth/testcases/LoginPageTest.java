@@ -132,8 +132,8 @@ public class LoginPageTest extends BaseTest {
             dataProvider = "getData1", enabled = false,
             description = "Verify the App Allows the user to tap forgot your password?")
     public void validateForgotPasswordTest(Map<String, String> map) {
-        new LoginPage().validateForgotPassword();
-        new ForgotPasswordPage().forgotPasswordPageTitle().chedkPresenceOfForgotPwdFieldText()
+        new ForgotPasswordPage().validateForgotPassword();
+        new ForgotPasswordPage().forgotPasswordPageTitle().checkPresenceOfForgotPwdFieldText()
                 .validateErrorOnInvalidForgotPwdField();
     }
 
@@ -147,15 +147,15 @@ public class LoginPageTest extends BaseTest {
             dataProvider = "getData1", enabled = true,
             description = "Verify the Continue button is enabled after the Email Address is correctly filled in")
     public void validateContinueBtnStateAfterEnteringEmailInForgotPwd(Map<String, String> map) {
-        new LoginPage().validateForgotPassword();
-        new ForgotPasswordPage().continueBtnState();
+        new ForgotPasswordPage().validateForgotPassword();
+        new ForgotPasswordPage();
     }
 
     @Test(groups = "forgetPwd",
-            dataProvider = "getData1", enabled = false,
+            dataProvider = "getData1", enabled = true,
             description = "Verify and validate App allows maximum of 50 characters for the Email Address field")
     public void verifyForgotPasswordEmail(Map<String, String> map) {
-        new LoginPage().validateForgotPassword();
+        new ForgotPasswordPage().validateForgotPassword();
         new ForgotPasswordPage().enterEmailAndContinue(PropertyUtils.getValue("forgotPasswordEmail"));
     }
 

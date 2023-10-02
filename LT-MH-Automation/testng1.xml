@@ -7,9 +7,11 @@
 
     <test name="Test cases" parallel="none" thread-count="1">
         <classes>
+            <class name="org.magellanhealth.testcases.ForgotPasswordTest"></class>
             <class name="org.magellanhealth.testcases.LoginTest">
                 <methods>
                     <include name="verifySignInScreen"/>
+                    <include name="verifyForgotPasswordScreen"/>
 <!--                    <include name="loginAndValidateTest"/>-->
 <!--                    <include name="verifyEmailKeyboard"/>-->
 <!--                    <include name="emailKeyboardAppears"/>-->
