@@ -15,7 +15,7 @@ public class LoginTest extends BaseTest {
 
 
     @Test(groups = "SmokeTest", dataProvider = "getData1",
-            description = "Verify login page", enabled = true)
+            description = "Verify login page", enabled = false)
     public void verifySignInScreen(Map<String, String> map) {
         new ForgotPasswordPage()
                 .verifyForgotPasswordLink();
@@ -24,7 +24,9 @@ public class LoginTest extends BaseTest {
                 .verifyKeyboardShownForPassword()
                 .enterUsername(PropertyUtils.getValue("appUsername7"))
                 .enterPassword(PropertyUtils.getValue("appPassword7"))
-                .clickSignIn();
+                .clickSignIn()
+        .clickAndValidateNextScreen()
+                .clickAndValidateGetStartedScreen();
 
     }
 

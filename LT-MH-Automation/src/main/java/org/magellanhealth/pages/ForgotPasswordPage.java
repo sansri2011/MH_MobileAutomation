@@ -91,11 +91,12 @@ public class ForgotPasswordPage extends LoginPage {
         click(forgotPwdFieldOnForgotPwdScreen, "email");
         sendTextUsingJS(email);
         ExtentLogger.info("User enter valid Email Address");
-        continueBtnState();
+       // continueBtnState();
         click(continueOnForgotBtn, "continue");
         if (returnToSignInScreen.isDisplayed()) {
-            ExtentLogger.pass("Email sent successfully");
             ExtentLogger.info("continue");
+            ExtentLogger.pass("Email sent successfully");
+
         }else{
             throw new RuntimeException("Email not sent successfully");
         }

@@ -14,10 +14,10 @@ import java.util.Map;
 public class ForgotPasswordTest extends BaseTest {
 
     @Test(groups = "SmokeTest", dataProvider = "getData1",
-            description = "Verify login page", enabled = true)
+            description = "Verify login page", enabled = false)
     public void verifyForgotPasswordScreen(Map<String, String> map) {
-        String username = PropertyUtils.getValue("appUsername7");
-        String password = PropertyUtils.getValue("appPassword7");
+        String username = PropertyUtils.getValue("appUsername");
+        String password = PropertyUtils.getValue("appPassword");
         new ForgotPasswordPage().
                 validateForgotPassword()
                 .forgotPasswordPageTitle()

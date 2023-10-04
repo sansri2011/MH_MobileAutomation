@@ -302,23 +302,23 @@ public class LoginPage extends NativeBasePage {
         return new ForgotPasswordPage();
     }
 
-    public LoginPage enterUsername(String enterUsername) {
+    public LoginPage enterUsername(String username) {
         try {
             WaitHelpers.waitTime(5);
             click(email, "username");
-            sendTextUsingJS(enterUsername);
+            sendTextUsingJS(username);
             hideKeyboard();
         } catch (Exception e) {
-            System.out.println("Something wrong while entering username");
+            System.out.println("Something wrong while entering username but clicked successfully");
         }
         return this;
 
     }
 
-    public LoginPage enterPassword(String enterPwd) {
+    public LoginPage enterPassword(String password) {
         WaitHelpers.waitTime(5);
         click(pwd, "password");
-        sendTextUsingJS(enterPwd);
+        sendTextUsingJS(password);
         return this;
     }
 
@@ -329,6 +329,7 @@ public class LoginPage extends NativeBasePage {
         if (signIn.isEnabled() && signIn.isDisplayed()) {
             ExtentLogger.pass("Sign In button is enable and displayed in Sign in screen");
             click(signIn, "SignIn button");
+            WaitHelpers.waitTime(30);
         } else {
             Assert.assertFalse(false);
         }
@@ -336,7 +337,7 @@ public class LoginPage extends NativeBasePage {
     }
 
 
-    private LoginPage clickAndValidateNextScreen() {
+    public LoginPage clickAndValidateNextScreen() {
         WaitHelpers.waitTime(5);
         try {
             while (nextBtn.isDisplayed()) {
@@ -379,7 +380,7 @@ public class LoginPage extends NativeBasePage {
         }
     }
 
-    private void validateGetStartedScreen3() {
+    public void validateGetStartedScreen3() {
         if (getStartedScreen2.isDisplayed()) {
             ExtentLogger.info("getStartedScreen");
             Assert.assertTrue(true, "Get the best Rx prices");
@@ -390,7 +391,7 @@ public class LoginPage extends NativeBasePage {
     }
 
 
-    private LoginPage clickAndValidateGetStartedScreen() {
+    public LoginPage clickAndValidateGetStartedScreen() {
         WaitHelpers.waitTime(10);
         validateGetStartedScreen3();
         click(getStarted, "getStarted");

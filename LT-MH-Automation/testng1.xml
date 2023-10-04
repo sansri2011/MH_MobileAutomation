@@ -8,10 +8,12 @@
     <test name="Test cases" parallel="none" thread-count="1">
         <classes>
             <class name="org.magellanhealth.testcases.ForgotPasswordTest"></class>
-            <class name="org.magellanhealth.testcases.LoginTest">
+            <class name="org.magellanhealth.testcases.LoginTest"/>
+            <class name="org.magellanhealth.testcases.RxHomePageTest">
                 <methods>
                     <include name="verifySignInScreen"/>
                     <include name="verifyForgotPasswordScreen"/>
+                    <include name="RxHomePageTest"/>
                 </methods>
             </class>
         </classes>

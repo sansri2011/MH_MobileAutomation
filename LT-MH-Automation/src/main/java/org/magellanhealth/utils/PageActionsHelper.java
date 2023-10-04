@@ -178,6 +178,7 @@ public class PageActionsHelper {
     public static void sendTextUsingJS(String text) {
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("mobile: performEditorAction", new Object[]{ImmutableMap.of("action", text)});
+        ExtentLogger.pass("User entered "+text+" successfully");
 
     }
     public static void clickByCoordinates(int x, int y, long seconds) {

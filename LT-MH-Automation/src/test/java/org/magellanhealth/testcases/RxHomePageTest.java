@@ -1,6 +1,8 @@
 package org.magellanhealth.testcases;
 
-import org.magellanhealth.pages.HomePage;
+import org.magellanhealth.pages.LoginPage;
+import org.magellanhealth.pages.RxHomePage;
+import org.magellanhealth.utils.PropertyUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -9,11 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomePageTest {
+public class RxHomePageTest extends BaseTest{
 
     @Test(dataProvider = "getData1")
-    public void loginTest(Map<String, String> map) throws InterruptedException {
-        new HomePage().loginPage();
+    public void RxHomePageTest(Map<String, String> map) throws InterruptedException {
+        new LoginPage().verifyElementOnScreen()
+                .verifyKeyboardShownForEmail()
+                .verifyKeyboardShownForPassword()
+                .enterUsername(PropertyUtils.getValue("appUsername7"))
+                .enterPassword(PropertyUtils.getValue("appPassword7"))
+                .clickSignIn();
+        new RxHomePage().validateListOfMedicines();
+
     }
 
 
