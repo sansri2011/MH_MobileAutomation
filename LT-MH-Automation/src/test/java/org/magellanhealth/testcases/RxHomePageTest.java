@@ -24,7 +24,11 @@ public class RxHomePageTest extends BaseTest {
                 .clickSignIn()
                 .clickAndValidateNextScreen()
                 .clickAndValidateGetStartedScreen();
-        new RxHomePage().checkUsernameDisplayOnRxHomePage();
+        new RxHomePage().checkUsernameDisplayOnRxHomePage()
+                .validateFilterby()
+//                .validateGreetingsMsg()
+                .clickOnSearchBtn();
+
 
     }
 

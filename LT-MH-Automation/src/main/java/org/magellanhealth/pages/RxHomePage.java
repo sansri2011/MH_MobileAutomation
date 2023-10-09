@@ -11,18 +11,24 @@ import java.util.List;
 
 public class RxHomePage extends NativeBasePage {
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Dorothy's account']")
-    private static WebElement userName;
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc=\"Dorothy's account\"]")
+    private static WebElement accountHolderName;
 
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='search']")
     private static WebElement searchBtn;
 
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
+    private static WebElement filterBy;
+
+
+
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sort by options. Currently sorting by Newest status update']")
     private static WebElement sortBy;
 
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Good Afternoon 🌤 Drink water & take your medications']")
+    @AndroidFindBy(xpath = "\t\n" +
+            "//android.view.View[contains(@content-desc,\"Good Morning ☀\uFE0F Drink water & take your medications\"]")
     private static WebElement greetingsMsg;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Recent Rx.']")
     private static WebElement filterOption;
@@ -38,24 +44,25 @@ public class RxHomePage extends NativeBasePage {
     }
 
     public RxHomePage checkUsernameDisplayOnRxHomePage() {
-        String nameText = userName.getText();
-        if (userName.isDisplayed()) {
-            ExtentLogger.pass("Username displayed on the page");
+  //    String nameText = accountHolderName.getText();
+        if (accountHolderName.isDisplayed()) {
+            ExtentLogger.pass("Account holder name displayed on the page");
         } else {
-            ExtentLogger.fail("Username not displayed on the page");
+            ExtentLogger.fail("Account holder name not displayed on the page");
         }
-        System.out.println(nameText);
+       // System.out.println(nameText);
         return this;
     }
 
 
-    public void clickOnSearchBtn() {
+    public RxHomePage clickOnSearchBtn() {
         if (searchBtn.isDisplayed() && searchBtn.isEnabled()) {
             ExtentLogger.pass("Search button displayed and enable on the page");
             click(searchBtn, "Search button");
         } else {
             ExtentLogger.fail("Search button is not displayed on the page, or not enable");
         }
+        return this;
     }
 
     public RxHomePage validateGreetingsMsg() {
@@ -73,6 +80,16 @@ public class RxHomePage extends NativeBasePage {
 
             System.out.println(ls.getText());
 
+        }
+        return this;
+    }
+
+
+    public RxHomePage validateFilterby(){
+        if (filterBy.isDisplayed() && filterBy.isEnabled()) {
+            ExtentLogger.pass("filterBy button displayed");
+        }else{
+            ExtentLogger.fail("filterBy button is not displayed or enable");
         }
         return this;
     }

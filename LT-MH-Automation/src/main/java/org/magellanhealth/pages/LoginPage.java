@@ -395,7 +395,7 @@ public class LoginPage extends NativeBasePage {
         WaitHelpers.waitTime(10);
         validateGetStartedScreen3();
         click(getStarted, "getStarted");
-        WaitHelpers.waitTime(30);
+        WaitHelpers.waitTime(50);
         return this;
     }
 
