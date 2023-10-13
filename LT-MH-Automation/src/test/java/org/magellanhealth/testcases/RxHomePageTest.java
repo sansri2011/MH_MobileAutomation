@@ -3,7 +3,6 @@ package org.magellanhealth.testcases;
 import org.magellanhealth.pages.LoginPage;
 import org.magellanhealth.pages.RxHomePage;
 import org.magellanhealth.utils.PropertyUtils;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -15,7 +14,7 @@ import java.util.Map;
 public class RxHomePageTest extends BaseTest {
 
     @Test(dataProvider = "getData1")
-    public void RxHomePageTest(Map<String, String> map) throws InterruptedException {
+    public void verifyElementsOnRxHomePageTest(Map<String, String> map) throws InterruptedException {
         new LoginPage().verifyElementOnScreen()
                 .verifyKeyboardShownForEmail()
                 .verifyKeyboardShownForPassword()
@@ -26,11 +25,15 @@ public class RxHomePageTest extends BaseTest {
                 .clickAndValidateGetStartedScreen();
         new RxHomePage().checkUsernameDisplayOnRxHomePage()
                 .validateFilterby()
-//                .validateGreetingsMsg()
-                .clickOnSearchBtn();
-
-
+                .validateSearchBtn()
+                .validateGoToRxSearchBtn()
+                .validateRxHistoryBtn()
+                .validateMyRxBtn()
+                .validateMoreBBtn();
     }
+
+
+
 
 
     @DataProvider(parallel = true)

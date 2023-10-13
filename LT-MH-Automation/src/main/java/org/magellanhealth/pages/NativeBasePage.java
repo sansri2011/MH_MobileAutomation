@@ -70,4 +70,12 @@ public class NativeBasePage {
         }
     }
 
+    public static void validateElement(WebElement elementToValidate, String elementName) {
+        if (elementToValidate.isDisplayed() && elementToValidate.isEnabled()) {
+            ExtentLogger.pass(elementName+" displayed and enable on the page");
+        } else {
+            ExtentLogger.fail(elementName+" is not displayed on the page, or not enable");
+        }
+    }
+
 }

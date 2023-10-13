@@ -2,7 +2,6 @@ package org.magellanhealth.pages;
 
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.magellanhealth.Report.ExtentLogger;
 import org.magellanhealth.driverManager.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -21,14 +20,29 @@ public class RxHomePage extends NativeBasePage {
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
     private static WebElement filterBy;
 
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Rx History tab. 1 of 3. Tap to view your deductible tracker and claim history.']")
+    private static WebElement RxHistory;
 
+
+    @AndroidFindBy(xpath ="//android.view.View[@content-desc='My Rx tab. 2 of 3. Tap to manage your current and past prescriptions.']")
+    private static WebElement myRx;
+
+    @AndroidFindBy(xpath ="//android.view.View[@content-desc='More tab. 3 of 3. Tap for settings, support and other options.']")
+    private static WebElement moreBtn;
+
+    @AndroidFindBy(xpath ="//android.view.View[@content-desc=' There are no prescriptions available yet. They will appear here once we have a prescription on file and under review. You can look up information on any medication using our search tool.']")
+    private static WebElement noPrescriptionText;
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
+    private static WebElement filterByFamilyMember;
+
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Go to Rx search']")
+    private static WebElement goToRxSearch;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sort by options. Currently sorting by Newest status update']")
     private static WebElement sortBy;
 
-
-    @AndroidFindBy(xpath = "\t\n" +
-            "//android.view.View[contains(@content-desc,\"Good Morning ☀\uFE0F Drink water & take your medications\"]")
+    @AndroidFindBy(xpath = "\t\n" + "//android.view.View[contains(@content-desc,\"Good Morning ☀\uFE0F Drink water & take your medications\"]")
     private static WebElement greetingsMsg;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Recent Rx.']")
     private static WebElement filterOption;
@@ -37,61 +51,63 @@ public class RxHomePage extends NativeBasePage {
     private static List<WebElement> medicinesList;
 
 
-
-
     public RxHomePage() {
         PageFactory.initElements(new AppiumFieldDecorator(DriverManager.getDriver()), this);
     }
 
     public RxHomePage checkUsernameDisplayOnRxHomePage() {
-  //    String nameText = accountHolderName.getText();
-        if (accountHolderName.isDisplayed()) {
-            ExtentLogger.pass("Account holder name displayed on the page");
-        } else {
-            ExtentLogger.fail("Account holder name not displayed on the page");
-        }
-       // System.out.println(nameText);
+        validateElement(accountHolderName, "Account holder");
         return this;
     }
 
 
     public RxHomePage clickOnSearchBtn() {
-        if (searchBtn.isDisplayed() && searchBtn.isEnabled()) {
-            ExtentLogger.pass("Search button displayed and enable on the page");
-            click(searchBtn, "Search button");
-        } else {
-            ExtentLogger.fail("Search button is not displayed on the page, or not enable");
-        }
+        click(searchBtn, "search button");
         return this;
     }
+
 
     public RxHomePage validateGreetingsMsg() {
-        if (greetingsMsg.isDisplayed()) {
-            ExtentLogger.pass("Greeting message displayed on the page");
-        } else {
-            ExtentLogger.fail("Greeting message is not display message");
-        }
+        validateElement(greetingsMsg, "Greeting message");
         return this;
     }
 
-    public RxHomePage validateListOfMedicines(){
-        for (WebElement ls: medicinesList
-             ) {
-
-            System.out.println(ls.getText());
-
-        }
+    public RxHomePage validateFilterby() {
+        validateElement(filterBy, "filter by");
         return this;
     }
 
-
-    public RxHomePage validateFilterby(){
-        if (filterBy.isDisplayed() && filterBy.isEnabled()) {
-            ExtentLogger.pass("filterBy button displayed");
-        }else{
-            ExtentLogger.fail("filterBy button is not displayed or enable");
-        }
+    public RxHomePage validateSearchBtn() {
+        validateElement(searchBtn, "Search button");
         return this;
     }
+
+    public RxHomePage validateGoToRxSearchBtn() {
+    //    System.out.println(noPrescriptionText.getText());
+        validateElement(goToRxSearch, "Go to RXSearch button");
+        return this;
+    }
+
+    public RxHomePage validateRxHistoryBtn() {
+        validateElement(RxHistory, "Rx History button");
+        return this;
+    }
+
+    public RxHomePage validateMyRxBtn() {
+        validateElement(myRx, "My Rx button");
+        return this;
+    }
+
+    public RxHomePage validateMoreBBtn() {
+        validateElement(moreBtn, "More button");
+        return this;
+    }
+
+    public void rxHomeSearchTest() {
+        clickOnSearchBtn();
+       // enterTextByJS("");
+
+    }
+
 
 }

@@ -13,7 +13,7 @@
                 <methods>
                     <include name="verifySignInScreen"/>
                     <include name="verifyForgotPasswordScreen"/>
-                    <include name="RxHomePageTest"/>
+                    <include name="verifyElementsOnRxHomePageTest"/>
                 </methods>
             </class>
         </classes>
