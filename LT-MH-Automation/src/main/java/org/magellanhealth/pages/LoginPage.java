@@ -203,8 +203,8 @@ public class LoginPage extends NativeBasePage {
             ExtentLogger.pass("Sign but is enable");
             ExtentLogger.info("sing in button");
         } else {
-            ExtentLogger.fail("Sign but should not be enable");
-            throw new RuntimeException("Sign but should not be enable");
+            ExtentLogger.fail("Sign button should not be enable");
+            throw new RuntimeException("Sign button should not be enable");
         }
         return this;
     }
