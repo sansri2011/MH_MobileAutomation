@@ -12,17 +12,15 @@ import java.util.List;
 import java.util.Map;
 
 public class RxHomePageTest extends BaseTest {
+    String username = PropertyUtils.getValue("appUsername7");
+    String password = PropertyUtils.getValue("appPassword7");
 
-    @Test(dataProvider = "getData1")
+    @Test(dataProvider = "getData1", enabled = true)
     public void verifyElementsOnRxHomePageTest(Map<String, String> map) throws InterruptedException {
-        new LoginPage().verifyElementOnScreen()
-                .verifyKeyboardShownForEmail()
-                .verifyKeyboardShownForPassword()
-                .enterUsername(PropertyUtils.getValue("appUsername7"))
-                .enterPassword(PropertyUtils.getValue("appPassword7"))
-                .clickSignIn()
-                .clickAndValidateNextScreen()
-                .clickAndValidateGetStartedScreen();
+
+        new LoginPage()
+                .loginToApp(username, password);
+
         new RxHomePage().checkUsernameDisplayOnRxHomePage()
                 .validateFilterby()
                 .validateSearchBtn()
@@ -32,8 +30,19 @@ public class RxHomePageTest extends BaseTest {
                 .validateMoreBBtn();
     }
 
-
-
+    @Test(dataProvider = "getData1", enabled = false)
+    public void
+    validateRxHomePage(Map<String, String> map) {
+        new LoginPage().verifyElementOnScreen()
+                .verifyKeyboardShownForEmail()
+                .verifyKeyboardShownForPassword()
+                .enterUsername(PropertyUtils.getValue("appUsername7"))
+                .enterPassword(PropertyUtils.getValue("appPassword7"))
+                .clickSignIn()
+                .clickAndValidateNextScreen()
+                .clickAndValidateGetStartedScreen();
+        new RxHomePage().rxHomeSearchTest();
+    }
 
 
     @DataProvider(parallel = true)
@@ -54,4 +63,5 @@ public class RxHomePageTest extends BaseTest {
         list.add(map3);
         return list.toArray();
     }
+
 }

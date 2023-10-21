@@ -177,6 +177,21 @@ public class LoginPage extends NativeBasePage {
         return this;
     }
 
+    public LoginPage loginToApp(String username, String password) {
+        WaitHelpers.waitTime(20);
+        enterUsername(username);
+        enterPassword(password);
+        email.click();
+        hideKeyboard();
+        signIn.click();
+        ExtentLogger.pass("User logged in successfully");
+        WaitHelpers.waitTime(200);
+        skipTutorial.click();
+        ExtentLogger.pass("Tutorial skipped in successfully");
+        return this;
+    }
+
+
     public LoginPage invalidUsernamePasswd(String username, String password) {
         enterPassword(username);
         enterPassword(password);

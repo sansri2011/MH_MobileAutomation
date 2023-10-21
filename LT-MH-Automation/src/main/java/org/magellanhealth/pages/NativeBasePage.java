@@ -7,6 +7,7 @@ import org.magellanhealth.utils.WaitHelpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 public class NativeBasePage {
 
@@ -72,9 +73,23 @@ public class NativeBasePage {
 
     public static void validateElement(WebElement elementToValidate, String elementName) {
         if (elementToValidate.isDisplayed() && elementToValidate.isEnabled()) {
-            ExtentLogger.pass(elementName+" displayed and enable on the page");
+            ExtentLogger.pass(elementName + " displayed and enable on the page");
         } else {
-            ExtentLogger.fail(elementName+" is not displayed on the page, or not enable");
+            ExtentLogger.fail(elementName + " is not displayed on the page, or not enable");
+        }
+    }
+
+    public static void validateText(WebElement element, String attributeName, String expectedTextToBeDisplayed) {
+        try {
+            if (element.isDisplayed()) {
+                String elementAttribute = element.getAttribute(attributeName);
+                Assert.assertEquals(expectedTextToBeDisplayed, elementAttribute);
+                ExtentLogger.pass("Text "+expectedTextToBeDisplayed+ " displayed");
+            }else{
+                ExtentLogger.fail("Could not validate text, as element not displayed oe enable");
+            }
+        } catch (Exception e) {
+            ExtentLogger.fail("Could not validate text, as element not present on screen");
         }
     }
 
