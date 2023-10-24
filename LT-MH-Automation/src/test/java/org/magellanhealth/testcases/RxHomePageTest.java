@@ -15,7 +15,7 @@ public class RxHomePageTest extends BaseTest {
     String username = PropertyUtils.getValue("appUsername7");
     String password = PropertyUtils.getValue("appPassword7");
 
-    @Test(dataProvider = "getData1", enabled = true)
+    @Test(dataProvider = "getData1", enabled = false)
     public void verifyElementsOnRxHomePageTest(Map<String, String> map) throws InterruptedException {
 
         new LoginPage()
@@ -30,18 +30,15 @@ public class RxHomePageTest extends BaseTest {
                 .validateMoreBBtn();
     }
 
-    @Test(dataProvider = "getData1", enabled = false)
+    @Test(dataProvider = "getData1", enabled = true)
     public void
     validateRxHomePage(Map<String, String> map) {
-        new LoginPage().verifyElementOnScreen()
-                .verifyKeyboardShownForEmail()
-                .verifyKeyboardShownForPassword()
-                .enterUsername(PropertyUtils.getValue("appUsername7"))
-                .enterPassword(PropertyUtils.getValue("appPassword7"))
-                .clickSignIn()
-                .clickAndValidateNextScreen()
-                .clickAndValidateGetStartedScreen();
-        new RxHomePage().rxHomeSearchTest();
+        new LoginPage() .loginToApp(username, password);
+        new RxHomePage()
+                .enterMedicinesNameInSearchField("Amoxi")
+                .verifyNumberOfMedicinesDisplayOnSearchResult(5)
+                .validateMedicineNameStartsWith("Amox")
+                .validateCloseBtnAndCloseSearch();//.filterByFamilyMember();
     }
 
 

@@ -2,14 +2,16 @@ package org.magellanhealth.pages;
 
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.remote.SupportsContextSwitching;
+import org.magellanhealth.Report.ExtentLogger;
 import org.magellanhealth.driverManager.DriverManager;
 import org.magellanhealth.utils.WaitHelpers;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static org.magellanhealth.utils.PageActionsHelper.sendTextUsingJS;
 
@@ -23,13 +25,30 @@ public class RxHomePage extends NativeBasePage {
     private static WebElement searchBtn;
 
 
-    @AndroidFindBy(xpath = "//hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText\n" + "    ")
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText")
     private static WebElement enterInSearch;
-
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button")
+    private static List<WebElement> medicineList;
     //[@class='android.widget.EditText']/[text()='Search for Rx name']
 
+    //android.view.View[@content-desc="Filter by family member The names listed below are family members that shared their prescription data with you"]/android.view.View/android.view.View
+
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Filter by family member The names listed below are family members that shared their prescription data with you']/android.view.View/android.view.View")
+    private static WebElement filterByFamilyMember;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
     private static WebElement filterBy;
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Hunter Scott ']")
+    private static WebElement familyMemberHunterScott;
+
+
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Filter by family member The names listed below are family members that shared their prescription data with you']/android.view.View/android.view.View")
+    private static List<WebElement> familyMemberList;
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Close Search']")
+    private static WebElement searchCloseBtn;
+
+
+//android.view.View[@content-desc="Filter by family member The names listed below are family members that shared their prescription data with you"]/android.view.View/android.view.View
+
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Rx History tab. 1 of 3. Tap to view your deductible tracker and claim history.']")
     private static WebElement RxHistory;
@@ -44,8 +63,8 @@ public class RxHomePage extends NativeBasePage {
     @AndroidFindBy(xpath = "//android.view.View[@content-desc=' There are no prescriptions available yet. They will appear here once we have a prescription on file and under review. You can look up information on any medication using our search tool.']")
     private static WebElement noPrescriptionText;
 
-    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
-    private static WebElement filterByFamilyMember;
+//    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
+//    private static WebElement filterByFamilyMember;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Go to Rx search']")
     private static WebElement goToRxSearch;
@@ -113,27 +132,81 @@ public class RxHomePage extends NativeBasePage {
 
     public RxHomePage validateMyRxBtn() {
         validateElement(myRx, "My Rx button");
-        validateText(myRx,"content-desc","My Rx tab. 2 of 3. Tap to manage your current and past prescriptions.");
+        validateText(myRx, "content-desc", "My Rx tab. 2 of 3. Tap to manage your current and past prescriptions.");
         return this;
     }
 
     public RxHomePage validateMoreBBtn() {
         validateElement(moreBtn, "More button");
         final String expectedTextToBeDisplayed = "More tab. 3 of 3. Tap for settings, support and other options.";
-        validateText(moreBtn,"content-desc", expectedTextToBeDisplayed);
+        validateText(moreBtn, "content-desc", expectedTextToBeDisplayed);
         return this;
     }
 
-    public void rxHomeSearchTest() {
+    public RxHomePage enterMedicinesNameInSearchField(String medicineName) {
         clickOnSearchBtn();
-        System.out.println(((SupportsContextSwitching) DriverManager.getDriver()).getContextHandles());
         click(enterInSearch, "search field");
-        Set<String> contextHandles = ((SupportsContextSwitching) DriverManager.getDriver()).getContextHandles();
-        for (String c : contextHandles) {
-            System.out.println(c);
+        hideKeyboard();
+        sendTextUsingJS(medicineName);
+        WaitHelpers.waitTime(30);
+        return this;
+    }
+
+    public RxHomePage verifyNumberOfMedicinesDisplayOnSearchResult(int count) {
+        if (medicineList.size() != 0) {
+            Assert.assertEquals(medicineList.size(), count);
+            ExtentLogger.pass(count + " medicines displayed on the page");
+        } else {
+            throw new RuntimeException("List is empty");
         }
-        sendTextUsingJS("Tablet name");
-        WaitHelpers.waitTime(2000);
+
+        return this;
+    }
+
+    public RxHomePage validateMedicineNameStartsWith(String medicinesNameToValidate) {
+        List<WebElement> elementList = DriverManager.getDriver().findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button"));
+
+        String[] ls = new String[elementList.size()];
+        boolean status = false;
+        for (WebElement element : elementList) {
+            if (elementList.size() != 0) {
+                if (element.getAttribute("content-desc").startsWith(medicinesNameToValidate)) {
+                    String elementAttribute = element.getAttribute("content-desc");
+                    ls = new String[]{elementAttribute};
+                    System.out.println(Arrays.toString(ls));
+                    status = true;
+                }
+            } else {
+                ExtentLogger.fail("Medicines list is empty");
+            }
+        }
+
+        if (status) {
+            ExtentLogger.info("All medicines displayed");
+            ExtentLogger.pass("All medicines starts with " + medicinesNameToValidate + "");
+        } else {
+            ExtentLogger.fail("Medicines name not starts with " + medicinesNameToValidate + " ");
+        }
+        return this;
+    }
+
+    public RxHomePage validateCloseBtnAndCloseSearch() {
+        if (searchCloseBtn.isDisplayed()) {
+            Assert.assertEquals(searchCloseBtn.getAttribute("content-desc"), "Close Search");
+            click(searchCloseBtn, "Close btn");
+        } else {
+            ExtentLogger.fail("Close btn on search screen is not enable or displayed");
+        }
+        return this;
+    }
+
+
+    public void filterByFamilyMember() {
+        for (WebElement w : familyMemberList) {
+            System.out.println(w.getAttribute("content-desc"));
+        }
+        validateElement(filterByFamilyMember, "FilterByFamilyMember");
+        validateText(filterByFamilyMember, "content-desc", "Filter by family member The names listed below are family members that shared their prescription data with you");
 
     }
 

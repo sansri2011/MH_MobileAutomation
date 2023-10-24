@@ -187,7 +187,7 @@ public class LoginPage extends NativeBasePage {
         ExtentLogger.pass("User logged in successfully");
         WaitHelpers.waitTime(50);
         skipTutorial.click();
-        WaitHelpers.waitTime(100);
+        WaitHelpers.waitTime(60);
         ExtentLogger.pass("Tutorial skipped in successfully");
         return this;
     }
