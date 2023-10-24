@@ -33,12 +33,13 @@ public class RxHomePageTest extends BaseTest {
     @Test(dataProvider = "getData1", enabled = true)
     public void
     validateRxHomePage(Map<String, String> map) {
-        new LoginPage() .loginToApp(username, password);
+        new LoginPage().loginToApp(username, password);
         new RxHomePage()
                 .enterMedicinesNameInSearchField("Amoxi")
                 .verifyNumberOfMedicinesDisplayOnSearchResult(5)
                 .validateMedicineNameStartsWith("Amox")
-                .validateCloseBtnAndCloseSearch();//.filterByFamilyMember();
+                .validateCloseBtnAndCloseSearch()//.filterByFamilyMember();
+                .filterByFamilyMember("user");
     }
 
 

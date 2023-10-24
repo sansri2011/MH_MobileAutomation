@@ -41,7 +41,7 @@ public class RxHomePage extends NativeBasePage {
     private static WebElement familyMemberHunterScott;
 
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Filter by family member The names listed below are family members that shared their prescription data with you']/android.view.View/android.view.View")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Filter by family member The names listed below are family members that shared their prescription data with you']/android.view.View/android.view.View/android.widget.Button")
     private static List<WebElement> familyMemberList;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Close Search']")
     private static WebElement searchCloseBtn;
@@ -201,14 +201,17 @@ public class RxHomePage extends NativeBasePage {
     }
 
 
-    public void filterByFamilyMember() {
+    public RxHomePage filterByFamilyMember(String familyMemberName) {
         for (WebElement w : familyMemberList) {
             System.out.println(w.getAttribute("content-desc"));
+            if ((w.getAttribute("content-desc").equalsIgnoreCase(""))) {
+
+            }
         }
         validateElement(filterByFamilyMember, "FilterByFamilyMember");
         validateText(filterByFamilyMember, "content-desc", "Filter by family member The names listed below are family members that shared their prescription data with you");
 
+        return this;
     }
-
 
 }
