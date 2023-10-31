@@ -33,7 +33,7 @@ public class RxHomePage extends NativeBasePage {
 
     //android.view.View[@content-desc="Filter by family member The names listed below are family members that shared their prescription data with you"]/android.view.View/android.view.View
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Filter by family member The names listed below are family members that shared their prescription data with you']/android.view.View/android.view.View")
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
     private static WebElement filterByFamilyMember;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
     private static WebElement filterBy;
@@ -153,13 +153,13 @@ public class RxHomePage extends NativeBasePage {
     }
 
     public RxHomePage verifyNumberOfMedicinesDisplayOnSearchResult(int count) {
+        hideKeyboard();
         if (medicineList.size() != 0) {
             Assert.assertEquals(medicineList.size(), count);
             ExtentLogger.pass(count + " medicines displayed on the page");
         } else {
             throw new RuntimeException("List is empty");
         }
-
         return this;
     }
 
@@ -173,7 +173,7 @@ public class RxHomePage extends NativeBasePage {
                 if (element.getAttribute("content-desc").startsWith(medicinesNameToValidate)) {
                     String elementAttribute = element.getAttribute("content-desc");
                     ls = new String[]{elementAttribute};
-                    System.out.println(Arrays.toString(ls));
+                    ExtentLogger.pass(Arrays.toString(ls));
                     status = true;
                 }
             } else {
@@ -202,15 +202,26 @@ public class RxHomePage extends NativeBasePage {
 
 
     public RxHomePage filterByFamilyMember(String familyMemberName) {
+        click(filterByFamilyMember, "filterByFamilyMember");
         for (WebElement w : familyMemberList) {
             System.out.println(w.getAttribute("content-desc"));
-            if ((w.getAttribute("content-desc").equalsIgnoreCase(""))) {
-
+            if ((w.getAttribute("content-desc").equalsIgnoreCase(familyMemberName))) {
+                WebElement elementUser = DriverManager.getDriver().findElement(By.xpath(
+                        "//android.widget.Button[@content-desc='Dorothy Scott (me) ']"));
+                click(elementUser, familyMemberName);
+            } else {
+                WebElement elementUser = DriverManager.getDriver().findElement(By.xpath(
+                        "//android.widget.Button[@content-desc='Hunter Scott ']"));
+                click(elementUser, familyMemberName);
             }
         }
-        validateElement(filterByFamilyMember, "FilterByFamilyMember");
-        validateText(filterByFamilyMember, "content-desc", "Filter by family member The names listed below are family members that shared their prescription data with you");
 
+        return this;
+    }
+
+    public RxHomePage ValidatefilterByFamily() {
+        validateElement(filterByFamilyMember, "FilterByFamilyMember");
+        validateText(filterByFamilyMember, "content-desc", "Filter options. Currently filtering by Dorothy Scott.");
         return this;
     }
 

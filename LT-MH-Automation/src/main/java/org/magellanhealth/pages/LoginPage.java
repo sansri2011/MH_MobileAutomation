@@ -178,16 +178,17 @@ public class LoginPage extends NativeBasePage {
     }
 
     public LoginPage loginToApp(String username, String password) {
-        WaitHelpers.waitTime(20);
+        WaitHelpers.waitTime(10);
         enterUsername(username);
+        hideKeyboard();
         enterPassword(password);
         email.click();
         hideKeyboard();
         signIn.click();
         ExtentLogger.pass("User logged in successfully");
-        WaitHelpers.waitTime(50);
+        WaitHelpers.waitTime(30);
         skipTutorial.click();
-        WaitHelpers.waitTime(60);
+        WaitHelpers.waitTime(40);
         ExtentLogger.pass("Tutorial skipped in successfully");
         return this;
     }
@@ -290,22 +291,14 @@ public class LoginPage extends NativeBasePage {
 
     public LoginPage verifyForgotPasswordLink() {
         WaitHelpers.waitTime(5);
-        if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
-            ExtentLogger.pass("Forgot password link is present");
-        } else {
-            ExtentLogger.fail("ForgotPassword link is not display or enable");
-        }
+        validateElement(forgotPwdLink, "Forgot password link");
         return new LoginPage();
     }
 
 
     public ForgotPasswordPage validateForgotPassword() {
         WaitHelpers.waitTime(5);
-        if (forgotPwdLink.isDisplayed() && forgotPwdLink.isEnabled()) {
-            click(forgotPwdLink, "Forgot password");
-        } else {
-            ExtentLogger.fail("ForgotPassword link is not display or enable");
-        }
+        validateElement(forgotPwdLink, "Forgot password");
         return new ForgotPasswordPage();
     }
 

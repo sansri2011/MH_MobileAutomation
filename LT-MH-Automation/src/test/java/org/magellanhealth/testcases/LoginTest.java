@@ -25,11 +25,10 @@ public class LoginTest extends BaseTest {
                 .enterUsername(PropertyUtils.getValue("appUsername7"))
                 .enterPassword(PropertyUtils.getValue("appPassword7"))
                 .clickSignIn()
-        .clickAndValidateNextScreen()
+                .clickAndValidateNextScreen()
                 .clickAndValidateGetStartedScreen();
 
     }
-
 
 
     @DataProvider(parallel = false)
