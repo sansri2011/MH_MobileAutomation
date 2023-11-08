@@ -41,7 +41,7 @@ public class RxHomePage extends NativeBasePage {
     private static WebElement familyMemberHunterScott;
 
 
-    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Filter by family member The names listed below are family members that shared their prescription data with you']/android.view.View/android.view.View/android.widget.Button")
+    @AndroidFindBy(xpath = "//*[@class='android.view.View']/*[@class='android.widget.Button']")
     private static List<WebElement> familyMemberList;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Close Search']")
     private static WebElement searchCloseBtn;
@@ -154,6 +154,7 @@ public class RxHomePage extends NativeBasePage {
 
     public RxHomePage verifyNumberOfMedicinesDisplayOnSearchResult(int count) {
         hideKeyboard();
+
         if (medicineList.size() != 0) {
             Assert.assertEquals(medicineList.size(), count);
             ExtentLogger.pass(count + " medicines displayed on the page");
@@ -203,19 +204,20 @@ public class RxHomePage extends NativeBasePage {
 
     public RxHomePage filterByFamilyMember(String familyMemberName) {
         click(filterByFamilyMember, "filterByFamilyMember");
-        for (WebElement w : familyMemberList) {
-            System.out.println(w.getAttribute("content-desc"));
-            if ((w.getAttribute("content-desc").equalsIgnoreCase(familyMemberName))) {
-                WebElement elementUser = DriverManager.getDriver().findElement(By.xpath(
-                        "//android.widget.Button[@content-desc='Dorothy Scott (me) ']"));
-                click(elementUser, familyMemberName);
-            } else {
-                WebElement elementUser = DriverManager.getDriver().findElement(By.xpath(
-                        "//android.widget.Button[@content-desc='Hunter Scott ']"));
-                click(elementUser, familyMemberName);
-            }
-        }
+        boolean status= false;
+        for (int i = 0; i < familyMemberList.size(); i++) {
 
+                if ((familyMemberList.get(i).getAttribute("content-desc").trim().equalsIgnoreCase(familyMemberName))) {
+                    WebElement familyMemName = familyMemberList.get(i);
+                    click(familyMemName, familyMemberName);
+                    break;
+                }else{
+                    status = true;
+                }
+        }
+        if (status) {
+            ExtentLogger.fail("FamilyName is not selected, Please check the family name provided");
+        }
         return this;
     }
 

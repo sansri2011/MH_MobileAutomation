@@ -6,18 +6,14 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.magellanhealth.Report.ExtentLogger;
-import org.magellanhealth.driverManager.Driver;
 import org.magellanhealth.driverManager.DriverManager;
 import org.magellanhealth.utils.WaitHelpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.time.Duration;
-
-import static org.magellanhealth.utils.PageActionsHelper.performScroll;
 
 public class NativeBasePage {
 
