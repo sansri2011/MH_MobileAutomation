@@ -216,7 +216,7 @@ public class RxHomePage extends NativeBasePage {
                 }
         }
         if (status) {
-            ExtentLogger.fail("FamilyName is not selected, Please check the family name provided");
+            ExtentLogger.fail("FamilyName "+familyMemberName+" is not selected, Please check the family name provided");
         }
         return this;
     }
