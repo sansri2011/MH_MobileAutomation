@@ -35,12 +35,23 @@ public class RxHomePageTest extends BaseTest {
         new LoginPage().loginToApp(username, password);
         new RxHomePage()
                 .enterMedicinesNameInSearchField("Amoxi")
-               // .verifyNumberOfMedicinesDisplayOnSearchResult(7)
+                .verifyNumberOfMedicinesDisplayOnSearchResult(7)
                 .validateMedicineNameStartsWith("Amox")
                 .validateCloseBtnAndCloseSearch()
-                .filterByFamilyMember("Thomas Scott");
+                .ValidatefilterByFamily()
+                .filterByFamilyMember("Hunter Scott")
+                .sortByAlphaOrder("Alphabetically");
+    }
 
-               // .ValidatefilterByFamily().filterByFamilyMember("Thomas Scott");
+    @Test(dataProvider = "getData1", enabled = false)
+    public void validateDrugDetailsPage(Map<String, String> map) {
+        String username = PropertyUtils.getValue("appUsername1");
+        String password = PropertyUtils.getValue("appPassword1");
+        new LoginPage().loginToApp(username, password);
+        new RxHomePage()
+                .enterMedicinesNameInSearchField("Amoxi")
+                .validateDrugDetailpage();
+
     }
 
 

@@ -2,6 +2,7 @@ package org.magellanhealth.utils;
 
 import org.magellanhealth.driverManager.DriverManager;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,7 +14,11 @@ import java.time.Duration;
 public class WaitHelpers {
 
     public static void waitUntilElementToBeClickable(WebElement element) {
-        FluentWait<WebDriver> ClickableWait = (new FluentWait<>(DriverManager.getDriver())).withTimeout(Duration.ofSeconds(10L)).pollingEvery(Duration.ofMillis(500L)).ignoring(NoSuchElementException.class, NullPointerException.class);
+        FluentWait<WebDriver> ClickableWait =
+                (new FluentWait<>(DriverManager.getDriver()))
+                        .withTimeout(Duration.ofSeconds(50L))
+                        .pollingEvery(Duration.ofMillis(500L))
+                        .ignoring(StaleElementReferenceException.class, NoSuchElementException.class);
         ClickableWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 

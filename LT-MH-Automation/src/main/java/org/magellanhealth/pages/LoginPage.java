@@ -17,6 +17,8 @@ import static org.magellanhealth.utils.PageActionsHelper.sendTextUsingJS;
 public class LoginPage extends NativeBasePage {
     @AndroidFindBy(xpath = "//*[contains(@class,'android.widget.EditText')][1]")
     private static WebElement email;
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='My Rx tab. 2 of 3. Tap to manage your current and past prescriptions.']")
+    private static WebElement myRx;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='The email address or password you have entered is invalid. Too many incorrect attempts will lock your account.']")
     private static WebElement invalidCredentialsErrorMessage;
@@ -178,7 +180,8 @@ public class LoginPage extends NativeBasePage {
     }
 
     public LoginPage loginToApp(String username, String password) {
-        WaitHelpers.waitTime(10);
+      //  WaitHelpers.waitTime(10);
+        WaitHelpers.waitUntilElementToBeClickable(email);
         enterUsername(username);
         hideKeyboard();
         enterPassword(password);
@@ -186,9 +189,10 @@ public class LoginPage extends NativeBasePage {
         hideKeyboard();
         signIn.click();
         ExtentLogger.pass("User logged in successfully");
-        WaitHelpers.waitTime(30);
+       // WaitHelpers.waitTime(30);
+        WaitHelpers.waitUntilElementToBeClickable(skipTutorial);
         skipTutorial.click();
-        WaitHelpers.waitTime(40);
+        WaitHelpers.waitUntilElementToBeClickable(myRx);
         ExtentLogger.pass("Tutorial skipped in successfully");
         return this;
     }
@@ -313,7 +317,6 @@ public class LoginPage extends NativeBasePage {
 
     public LoginPage enterUsername(String username) {
         try {
-            WaitHelpers.waitTime(5);
             click(email, "username");
             sendTextUsingJS(username);
             hideKeyboard();
@@ -325,7 +328,6 @@ public class LoginPage extends NativeBasePage {
     }
 
     public LoginPage enterPassword(String password) {
-        WaitHelpers.waitTime(5);
         click(pwd, "password");
         sendTextUsingJS(password);
         return this;

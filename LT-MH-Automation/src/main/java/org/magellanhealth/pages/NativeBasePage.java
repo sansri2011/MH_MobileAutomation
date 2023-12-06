@@ -4,23 +4,31 @@ import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 import org.magellanhealth.Report.ExtentLogger;
 import org.magellanhealth.driverManager.DriverManager;
 import org.magellanhealth.utils.WaitHelpers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Pause;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.testng.Assert;
 
 import java.time.Duration;
+import java.util.Collections;
 
 public class NativeBasePage {
 
     protected static void click(WebElement element, String elementName) {
-        scrollToElement(element);
+        //   scrollToElement(element);
+        WaitHelpers.waitUntilElementToBeClickable(element);
         if (element.isEnabled()) {
-            WaitHelpers.waitTime(5);
+
+            // WaitHelpers.waitTime(5);
             element.click();
         } else {
             System.out.println("Button is not present or enable");
@@ -41,6 +49,23 @@ public class NativeBasePage {
         }
     }
 
+
+    public static String getText(WebElement element) {
+        String attributeText = "";
+        WaitHelpers.waitUntilElementToBeClickable(element);
+        try {
+            if (element.isDisplayed()) {
+                attributeText = element.getAttribute("content-desc");
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            ExtentLogger.fail("Element not displayed");
+
+        }
+
+        return attributeText;
+    }
+
     public static void enterTextByJS(WebElement element, String text) {
         try {
             element.clear();
@@ -51,6 +76,10 @@ public class NativeBasePage {
         }
     }
 
+    public static void clickByJS(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) DriverManager.getDriver();
+        executor.executeScript("arguments[0].click();", element);
+    }
 
     protected String getTextByJS(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
@@ -129,5 +158,40 @@ public class NativeBasePage {
         }
     }
 
+    public static void tapElement(int x, int y) {
+        AndroidDriver driver;
+        driver = (AndroidDriver) DriverManager.getDriver();
+        TouchAction<?> action = new TouchAction<>(driver);
 
+    }
+
+    public static void tapElement(WebElement element) {
+
+        try {
+            AndroidDriver androidDriver = (AndroidDriver) DriverManager.getDriver();
+            Point source = element.getLocation();
+            PointerInput finger = new PointerInput(PointerInput.Kind.MOUSE, "finger");
+            Sequence sequence = new Sequence(finger, 1);
+            sequence.addAction(finger.createPointerMove(Duration.ofMillis(0),
+                    PointerInput.Origin.viewport(), source.x, source.y));
+            sequence.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
+            sequence.addAction(new Pause(finger, Duration.ofMillis(600)));
+            sequence.addAction(finger.createPointerMove(Duration.ofMillis(600),
+                    PointerInput.Origin.viewport(), source.x + 400, source.y));
+            sequence.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
+            androidDriver.perform(Collections.singletonList(sequence));
+        } catch (Exception ex) {
+            ExtentLogger.fail("Exception in tapElement(): " + ex);
+        }
+    }
+
+
+    public static void doubleTap(WebElement element) {
+        TouchAction touchAction = new TouchAction((PerformsTouchActions) DriverManager.getDriver());
+
+        // Perform the double tap
+        touchAction.tap(ElementOption.element(element)).perform();
+        //touchAction.waitAction(WaitOptions.waitOptions(Duration.ofSeconds(5))).perform(); // Wait for a short time
+        touchAction.tap(ElementOption.element(element)).perform();
+    }
 }

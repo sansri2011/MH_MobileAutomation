@@ -1,7 +1,11 @@
 package org.magellanhealth.pages;
 
+import io.appium.java_client.PerformsTouchActions;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import org.magellanhealth.Report.ExtentLogger;
 import org.magellanhealth.driverManager.DriverManager;
 import org.magellanhealth.utils.WaitHelpers;
@@ -10,8 +14,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.magellanhealth.utils.PageActionsHelper.sendTextUsingJS;
 
@@ -27,6 +33,23 @@ public class RxHomePage extends NativeBasePage {
 
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText")
     private static WebElement enterInSearch;
+    @AndroidFindBy(xpath = "//*[@content-desc='Amoxicillin Trihydrate']")
+    private static WebElement drugName;
+
+    @AndroidFindBy(xpath = "//*[@content-desc=\"Show details\"]")
+    private static WebElement showDetailsBtn;
+
+
+    @AndroidFindBy(xpath = "//*[@content-desc='Near my location ']")
+    private static WebElement nearMyLocation;
+    @AndroidFindBy(xpath = "//*[@content-desc=\"Show pharmacy options Near my home\"]")
+    private static WebElement showLocation;
+
+    //*[@content-desc='Show pharmacy options Near my home']
+    @AndroidFindBy(xpath = "//*[@content-desc=\"Customize your 'Amoxicillin Trihydrate' search\"]")
+    private static WebElement rxFilterTitle;
+
+
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button")
     private static List<WebElement> medicineList;
     //[@class='android.widget.EditText']/[text()='Search for Rx name']
@@ -43,6 +66,12 @@ public class RxHomePage extends NativeBasePage {
 
     @AndroidFindBy(xpath = "//*[@class='android.view.View']/*[@class='android.widget.Button']")
     private static List<WebElement> familyMemberList;
+
+    @AndroidFindBy(xpath = "//*[@class='android.widget.ScrollView']/*[@class='android.widget.Button']")
+    private static List<WebElement> myRxHomeDrugList;
+
+    @AndroidFindBy(xpath = "//*[@content-desc='Sort by options. Currently sorting by Newest status update']")
+    private static WebElement sortByBtn;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Close Search']")
     private static WebElement searchCloseBtn;
 
@@ -71,6 +100,9 @@ public class RxHomePage extends NativeBasePage {
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sort by options. Currently sorting by Newest status update']")
     private static WebElement sortBy;
+
+    @AndroidFindBy(xpath = "//*[@class='android.view.View' and ./*[@content-desc='Alphabetically ']]/*[@class='android.widget.Button']")
+    private static List<WebElement> sortByOptions;
 
     @AndroidFindBy(xpath = "\t\n" + "//android.view.View[contains(@content-desc,\"Good Morning ☀\uFE0F Drink water & take your medications\"]")
     private static WebElement greetingsMsg;
@@ -148,13 +180,81 @@ public class RxHomePage extends NativeBasePage {
         click(enterInSearch, "search field");
         hideKeyboard();
         sendTextUsingJS(medicineName);
-        WaitHelpers.waitTime(30);
+
         return this;
     }
 
-    public RxHomePage verifyNumberOfMedicinesDisplayOnSearchResult(int count) {
-        hideKeyboard();
+    public void validateDrugDetailpage() {
+        click(drugName, "amoxiline");
+        // validateText(rxFilterTitle, "content-desc","Customize your 'Amoxicillin Trihydrate' search");
+//        String elementAttribute = rxFilterTitle.getAttribute("content-desc");
+//System.out.println(elementAttribute);
 
+
+        WaitHelpers.waitUntilElementToBeClickable(showDetailsBtn);
+        showDetailsBtn.click();
+        TouchAction action = new TouchAction((PerformsTouchActions) DriverManager.getDriver());
+        //DriverManager.getDriver().findElements(By.xpath("//*[@class='android.widget.HorizontalScrollView']/*[@class='android.widget.Button']")).size() == 0
+
+        WaitHelpers.waitUntilElementToBeClickable(showLocation);
+        showLocation.click();
+        WaitHelpers.waitUntilElementToBeClickable(nearMyLocation);
+        nearMyLocation.click();
+
+
+        while (true) {
+            action.press(PointOption.point(498, 1096)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1))).moveTo(PointOption.point(206, 1086)).release().perform();
+
+        }
+
+
+//
+//        WaitHelpers.waitUntilElementToBeClickable(showDetailsBtn);
+//        TouchAction action = new TouchAction((PerformsTouchActions) DriverManager.getDriver());
+//
+//        action.longPress(LongPressOptions.longPressOptions()
+//                        .withElement(
+//                                ElementOption.element(
+//                                        DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=\"Form: Bottle of Capsules. Double tap to choose a different option. Button\"]"))
+//        element.click();
+//        element.sendKeys(Keys.ENTER);
+
+//        new TouchAction((PerformsTouchActions) DriverManager.getDriver()).longPress(LongPressOptions.longPressOptions()
+//                .withPosition(PointOption.point(416, 1012))).perform();
+
+//
+//        List<WebElement> elementList = DriverManager.getDriver().findElements(By.xpath("//*[@class=\"android.view.View\" and ./*[@content-desc=\"back\"]]/*[@class='android.view.View']/*[@class='android.view.View']"));
+//
+//        WebElement rxDetailsText = DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=\"Amoxicillin Trihydrate\"]"));
+//
+//
+//        validateText(rxDetailsText, "content-desc", "Customize your \"Amoxicillin Trihydrate\" search");
+//        for (int i = 3; i < elementList.size(); i++) {
+//            String name = elementList.get(i).getAttribute("content-desc");
+//            System.out.println(name);
+//            WebElement ele = elementList.get(i);
+//            if (ele.isEnabled()) {
+//                tapElement(ele);
+////                WebElement element = DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=\"Form: Bottle of Capsules. Double tap to choose a different option. Button\"]"));
+////
+////
+////                element.click();
+////                doubleTap(element);
+//
+//            }
+//            Point loc = ele.getLocation();
+//            int x = loc.getX();
+//            int y = loc.getY();
+//
+//            tapElement(x, y);
+//            //  DriverManager.getDriver().tap(x, ele, y);
+//        }
+    }
+
+
+    public RxHomePage verifyNumberOfMedicinesDisplayOnSearchResult(int count) {
+        WaitHelpers.waitTime(5);
+        hideKeyboard();
         if (medicineList.size() != 0) {
             Assert.assertEquals(medicineList.size(), count);
             ExtentLogger.pass(count + " medicines displayed on the page");
@@ -191,6 +291,7 @@ public class RxHomePage extends NativeBasePage {
         return this;
     }
 
+
     public RxHomePage validateCloseBtnAndCloseSearch() {
         if (searchCloseBtn.isDisplayed()) {
             Assert.assertEquals(searchCloseBtn.getAttribute("content-desc"), "Close Search");
@@ -204,22 +305,24 @@ public class RxHomePage extends NativeBasePage {
 
     public RxHomePage filterByFamilyMember(String familyMemberName) {
         click(filterByFamilyMember, "filterByFamilyMember");
-        boolean status= false;
+        boolean status = false;
         for (int i = 0; i < familyMemberList.size(); i++) {
-
-                if ((familyMemberList.get(i).getAttribute("content-desc").trim().equalsIgnoreCase(familyMemberName))) {
-                    WebElement familyMemName = familyMemberList.get(i);
-                    click(familyMemName, familyMemberName);
-                    break;
-                }else{
-                    status = true;
-                }
+            if ((familyMemberList.get(i).getAttribute("content-desc").trim().equalsIgnoreCase(familyMemberName))) {
+                WebElement familyMemName = familyMemberList.get(i);
+                click(familyMemName, familyMemberName);
+                WaitHelpers.waitTime(5);
+                status = false;
+                break;
+            } else {
+                status = true;
+            }
         }
         if (status) {
-            ExtentLogger.fail("FamilyName "+familyMemberName+" is not selected, Please check the family name provided");
+            ExtentLogger.fail("FamilyName " + familyMemberName + " is not selected, Please check the family name provided");
         }
         return this;
     }
+
 
     public RxHomePage ValidatefilterByFamily() {
         validateElement(filterByFamilyMember, "FilterByFamilyMember");
@@ -227,4 +330,41 @@ public class RxHomePage extends NativeBasePage {
         return this;
     }
 
+
+    public RxHomePage sortByAlphaOrder(String sortByOption) {
+        List<String> sortedList = actualSortedList();
+        List<String> afterSortingAlpabetically = null;
+
+        click(sortBy, "Sort By:");
+        boolean status = false;
+        for (int i = 0; i < sortByOptions.size(); i++) {
+            if ((sortByOptions.get(i).getAttribute("content-desc").trim().equalsIgnoreCase(sortByOption))) {
+                WebElement option = sortByOptions.get(i);
+                click(option, sortByOption);
+                WaitHelpers.waitTime(5);
+                afterSortingAlpabetically = myRxHomeDrugList.stream().map(NativeBasePage::getText).collect(Collectors.toList());
+                status = false;
+                break;
+            } else {
+                status = true;
+            }
+        }
+        if (status) {
+            ExtentLogger.fail("Sort by option " + sortByOption + " is not selected, Please check the sort by");
+        }
+        boolean areEqual = actualSortedList().equals(afterSortingAlpabetically);
+
+        if (areEqual) {
+            ExtentLogger.pass("Rx page drug list is alphabetically sorted");
+        } else {
+            ExtentLogger.fail("Rx page drug list is not alphabetically sorted");
+        }
+        return this;
+    }
+
+    private static List<String> actualSortedList() {
+        List<WebElement> homeDrugList = myRxHomeDrugList;
+        List<String> actualList = homeDrugList.stream().map(NativeBasePage::getText).sorted().collect(Collectors.toList());
+        return actualList;
+    }
 }
