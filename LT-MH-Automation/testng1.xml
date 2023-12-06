@@ -9,12 +9,16 @@
         <classes>
             <class name="org.magellanhealth.testcases.ForgotPasswordTest"></class>
             <class name="org.magellanhealth.testcases.LoginTest"/>
-            <class name="org.magellanhealth.testcases.RxHomePageTest">
+            <class name="org.magellanhealth.testcases.RxHomePageTest"/>
+            <class name="org.magellanhealth.testcases.MoreTabTest"/>
+            <class name="org.magellanhealth.testcases.SignUpTest">
                 <methods>
                     <include name="verifySignInScreen"/>
                     <include name="verifyForgotPasswordScreen"/>
                     <include name="verifyElementsOnRxHomePageTest"/>
                     <include name="validateRxHomePage"/>
+                    <include name="validateMoreTabTest"/>
+                    <include name="SignUpTest"/>
                 </methods>
             </class>
         </classes>
