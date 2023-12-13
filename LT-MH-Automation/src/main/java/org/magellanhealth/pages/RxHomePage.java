@@ -15,8 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.magellanhealth.utils.PageActionsHelper.sendTextUsingJS;
@@ -42,6 +41,9 @@ public class RxHomePage extends NativeBasePage {
 
     @AndroidFindBy(xpath = "//*[@content-desc='Near my location ']")
     private static WebElement nearMyLocation;
+
+    @AndroidFindBy(xpath = "//*[@class='android.widget.HorizontalScrollView']/*[@class='android.widget.Button']")
+    private static List<WebElement> pharmaciesList;
     @AndroidFindBy(xpath = "//*[@content-desc=\"Show pharmacy options Near my home\"]")
     private static WebElement showLocation;
 
@@ -202,11 +204,20 @@ public class RxHomePage extends NativeBasePage {
         nearMyLocation.click();
 
 
-        while (true) {
-            action.press(PointOption.point(498, 1096)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1))).moveTo(PointOption.point(206, 1086)).release().perform();
+        Set<String> set = new LinkedHashSet<>();
 
+        for (int i = 0; i <= 15; i++) {
+            for (WebElement list : pharmaciesList) {
+                String replaced = getText(list);
+                set.add(replaced);
+                action.press(PointOption.point(498, 1096))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+                        .moveTo(PointOption.point(206, 1086))
+                        .release()
+                        .perform();
+            }
         }
-
+        ExtentLogger.pass(set.toString());
 
 //
 //        WaitHelpers.waitUntilElementToBeClickable(showDetailsBtn);

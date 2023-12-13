@@ -21,7 +21,7 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.Collections;
 
-public class NativeBasePage {
+class NativeBasePage {
 
     protected static void click(WebElement element, String elementName) {
         //   scrollToElement(element);
@@ -50,7 +50,7 @@ public class NativeBasePage {
     }
 
 
-    public static String getText(WebElement element) {
+    public static final String getText(WebElement element) {
         String attributeText = "";
         WaitHelpers.waitUntilElementToBeClickable(element);
         try {

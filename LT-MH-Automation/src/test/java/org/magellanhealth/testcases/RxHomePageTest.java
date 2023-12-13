@@ -30,7 +30,7 @@ public class RxHomePageTest extends BaseTest {
                 .validateMoreBBtn();
     }
 
-    @Test(dataProvider = "getData1", enabled = true)
+    @Test(dataProvider = "getData1", enabled = false)
     public void validateRxHomePage(Map<String, String> map) {
         new LoginPage().loginToApp(username, password);
         new RxHomePage()
@@ -43,7 +43,7 @@ public class RxHomePageTest extends BaseTest {
                 .sortByAlphaOrder("Alphabetically");
     }
 
-    @Test(dataProvider = "getData1", enabled = false)
+    @Test(dataProvider = "getData1", enabled = true)
     public void validateDrugDetailsPage(Map<String, String> map) {
         String username = PropertyUtils.getValue("appUsername1");
         String password = PropertyUtils.getValue("appPassword1");
