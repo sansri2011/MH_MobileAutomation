@@ -1,11 +1,16 @@
 package org.magellanhealth.testcases;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.magellanhealth.pages.LoginPage;
 import org.magellanhealth.pages.RxHomePage;
 import org.magellanhealth.utils.PropertyUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,9 +57,8 @@ public class RxHomePageTest extends BaseTest {
                 .enterMedicinesNameInSearchField("Amoxi")
                 .validateDrugDetailpage();
 
+
     }
-
-
     @DataProvider(parallel = true)
     public Object[] getData1() {
         HashMap<String, String> map = new HashMap<>();
@@ -74,4 +78,14 @@ public class RxHomePageTest extends BaseTest {
         return list.toArray();
     }
 
+    @DataProvider(parallel = true)
+    public Object[] getData() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        List<Map<String, Object>> list = mapper.readValue(new File(System.getProperty("user.dir")
+                + "src/test/resources/jsontestdata/iteration.json"), new TypeReference<List<Map<String, Object>>>() {
+        });
+
+        return list.toArray();
+    }
 }

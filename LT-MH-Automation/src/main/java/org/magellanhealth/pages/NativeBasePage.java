@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Pause;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
@@ -20,6 +21,9 @@ import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 class NativeBasePage {
 
@@ -194,4 +198,25 @@ class NativeBasePage {
         //touchAction.waitAction(WaitOptions.waitOptions(Duration.ofSeconds(5))).perform(); // Wait for a short time
         touchAction.tap(ElementOption.element(element)).perform();
     }
+
+    static void horizontalScroll(List<WebElement> list, int xOffset1, int yOffSet1,int xOffset2, int yOffSet2) {
+        Set<String> set = new LinkedHashSet<>();
+        for (int i = 0; i <= 15; i++) {
+            for (WebElement ls : list) {
+                String replaced = getText(ls);
+                set.add(replaced);
+                new TouchAction((PerformsTouchActions) DriverManager.getDriver())
+                        .press(PointOption.point(xOffset1, yOffSet1))
+                        .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+                        .moveTo(PointOption.point(xOffset2, yOffSet2))
+                        .release()
+                        .perform();
+            }
+        }
+        ExtentLogger.pass(set.toString());
+    }
+
+
+
+
 }

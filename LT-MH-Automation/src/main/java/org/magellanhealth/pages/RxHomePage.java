@@ -32,7 +32,8 @@ public class RxHomePage extends NativeBasePage {
 
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText")
     private static WebElement enterInSearch;
-    @AndroidFindBy(xpath = "//*[@content-desc='Amoxicillin Trihydrate']")
+    // @AndroidFindBy(xpath = "//*[@content-desc='Amoxicillin Trihydrate']")
+    @AndroidFindBy(xpath = "//*[@content-desc='Amoxicillin']")
     private static WebElement drugName;
 
     @AndroidFindBy(xpath = "//*[@content-desc=\"Show details\"]")
@@ -182,7 +183,14 @@ public class RxHomePage extends NativeBasePage {
         click(enterInSearch, "search field");
         hideKeyboard();
         sendTextUsingJS(medicineName);
-
+        try {
+            if (DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=+" + medicineName + "]"))
+                    .isDisplayed()) {
+                ExtentLogger.pass("Drugs are available for " + medicineName + "+");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Either drugs are not available for " + medicineName + "+ or service is down");
+        }
         return this;
     }
 
@@ -204,20 +212,8 @@ public class RxHomePage extends NativeBasePage {
         nearMyLocation.click();
 
 
-        Set<String> set = new LinkedHashSet<>();
+        horizontalScroll(pharmaciesList, 498, 1096, 206, 1086);
 
-        for (int i = 0; i <= 15; i++) {
-            for (WebElement list : pharmaciesList) {
-                String replaced = getText(list);
-                set.add(replaced);
-                action.press(PointOption.point(498, 1096))
-                        .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
-                        .moveTo(PointOption.point(206, 1086))
-                        .release()
-                        .perform();
-            }
-        }
-        ExtentLogger.pass(set.toString());
 
 //
 //        WaitHelpers.waitUntilElementToBeClickable(showDetailsBtn);

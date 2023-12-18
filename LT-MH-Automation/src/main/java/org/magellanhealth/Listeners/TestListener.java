@@ -24,7 +24,7 @@ public class TestListener implements ITestListener, ISuiteListener {
         ExtentLogger.fail(result.getName() + " is failed");
         ExtentLogger.fail(result.getThrowable().toString());
 
-        ExtentLogger.fail(Arrays.toString(result.getThrowable().getStackTrace()));
+        //ExtentLogger.fail(Arrays.toString(result.getThrowable().getStackTrace()));
     }
 
     @Override
