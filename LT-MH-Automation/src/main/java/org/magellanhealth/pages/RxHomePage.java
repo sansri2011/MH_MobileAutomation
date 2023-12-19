@@ -183,8 +183,15 @@ public class RxHomePage extends NativeBasePage {
         click(enterInSearch, "search field");
         hideKeyboard();
         sendTextUsingJS(medicineName);
+//        boolean status = false;
+//        boolean displayed = DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=+" + medicineName + "]"))
+//                .isDisplayed();
+
+
         try {
-            if (DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=+" + medicineName + "]"))
+//            WaitHelpers.waitUntilElementToBeClickable(DriverManager.getDriver().
+//                    findElement(By.xpath("//*[@content-desc=+" + medicineName + "]")));
+            if (DriverManager.getDriver().findElement(By.xpath("//*[@content-desc="+'"'+medicineName+'"'+"]"))
                     .isDisplayed()) {
                 ExtentLogger.pass("Drugs are available for " + medicineName + "+");
             }

@@ -54,7 +54,7 @@ public class RxHomePageTest extends BaseTest {
         String password = PropertyUtils.getValue("appPassword1");
         new LoginPage().loginToApp(username, password);
         new RxHomePage()
-                .enterMedicinesNameInSearchField("Amoxi")
+                .enterMedicinesNameInSearchField("Amoxicillin")
                 .validateDrugDetailpage();
 
 
