@@ -16,7 +16,7 @@ public class ExtentReport {
     public static ExtentReports extent;
     public static File file;
 
-    public static void initReport() {
+    public void initReport() {
         if (Objects.isNull(extent)) {
             extent = new ExtentReports();
             file = new File(System.getProperty("user.dir") + "/index.html");
@@ -28,13 +28,13 @@ public class ExtentReport {
         }
     }
 
-    public static void createTest(String testCaseName) {
+    public void createTest(String testCaseName) {
         ExtentTest test = extent.createTest(testCaseName);
         ExtentManager.setExtentReport(test);
     }
 
 
-    public static void tearDownReport() {
+    public void tearDownReport() {
         if (Objects.nonNull(extent)) {
             extent.flush();
             ExtentManager.unload();
@@ -43,8 +43,7 @@ public class ExtentReport {
 
     }
 
-    private static void openReportOnFinish() {
-
+    private void openReportOnFinish() {
         try {
             if (PropertyUtils.getValue("openReportAutomaticallyOnTestFinish").equals("true")) {
                 Desktop.getDesktop().browse(file.toURI());

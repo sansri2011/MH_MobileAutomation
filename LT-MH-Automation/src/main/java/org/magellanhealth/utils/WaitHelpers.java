@@ -13,7 +13,7 @@ import java.time.Duration;
 
 public class WaitHelpers {
 
-    public static void waitUntilElementToBeClickable(WebElement element) {
+    public void waitUntilElementToBeClickable(WebElement element) {
         FluentWait<WebDriver> ClickableWait =
                 (new FluentWait<>(DriverManager.getDriver()))
                         .withTimeout(Duration.ofSeconds(50L))
@@ -22,6 +22,15 @@ public class WaitHelpers {
         ClickableWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
+
+    public void waitUntilElementToBeClickableWithTimeout(WebElement element, int seconds) {
+        FluentWait<WebDriver> ClickableWait =
+                (new FluentWait<>(DriverManager.getDriver()))
+                        .withTimeout(Duration.ofSeconds(seconds))
+                        .pollingEvery(Duration.ofMillis(500L))
+                        .ignoring(StaleElementReferenceException.class, NoSuchElementException.class);
+        ClickableWait.until(ExpectedConditions.elementToBeClickable(element));
+    }
     public static void waitTime(long second) {
         try {
             Thread.sleep(second * 1000L);

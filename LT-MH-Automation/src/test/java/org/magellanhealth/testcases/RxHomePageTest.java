@@ -11,20 +11,17 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RxHomePageTest extends BaseTest {
-    String username = PropertyUtils.getValue("appUsername7");
-    String password = PropertyUtils.getValue("appPassword7");
+    ThreadLocal<String> username = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appUsername7"));
+    ThreadLocal<String> password = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appPassword7"));
 
-    @Test(dataProvider = "getData1", enabled = false)
+    @Test(dataProvider = "getData1", enabled = true)
     public void verifyElementsOnRxHomePageTest(Map<String, String> map) throws InterruptedException {
 
         new LoginPage()
-                .loginToApp(username, password);
+                .loginToApp(username.get(), password.get());
 
         new RxHomePage().checkUsernameDisplayOnRxHomePage()
                 .validateFilterby()
@@ -35,11 +32,11 @@ public class RxHomePageTest extends BaseTest {
                 .validateMoreBBtn();
     }
 
-    @Test(dataProvider = "getData1", enabled = false)
+    @Test(dataProvider = "getData", enabled = true)
     public void validateRxHomePage(Map<String, String> map) {
-        new LoginPage().loginToApp(username, password);
+        new LoginPage().loginToApp(username.get(), password.get());
         new RxHomePage()
-                .enterMedicinesNameInSearchField("Amoxi")
+                .enterMedicinesNameInSearchField("Amoxicillin")
                 .verifyNumberOfMedicinesDisplayOnSearchResult(7)
                 .validateMedicineNameStartsWith("Amox")
                 .validateCloseBtnAndCloseSearch()
@@ -48,17 +45,19 @@ public class RxHomePageTest extends BaseTest {
                 .sortByAlphaOrder("Alphabetically");
     }
 
-    @Test(dataProvider = "getData1", enabled = true)
+    @Test(dataProvider = "getData", enabled = true)
     public void validateDrugDetailsPage(Map<String, String> map) {
-        String username = PropertyUtils.getValue("appUsername1");
-        String password = PropertyUtils.getValue("appPassword1");
-        new LoginPage().loginToApp(username, password);
+      //  String username = PropertyUtils.getValue("appUsername1");
+      //  String password = PropertyUtils.getValue("appPassword1");
+        ThreadLocal<String> username = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appUsername1"));
+        ThreadLocal<String> password = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appPassword1"));
+        new LoginPage().loginToApp(username.get(), password.get());
         new RxHomePage()
                 .enterMedicinesNameInSearchField("Amoxicillin")
                 .validateDrugDetailpage();
 
-
     }
+
     @DataProvider(parallel = true)
     public Object[] getData1() {
         HashMap<String, String> map = new HashMap<>();
@@ -83,7 +82,7 @@ public class RxHomePageTest extends BaseTest {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         List<Map<String, Object>> list = mapper.readValue(new File(System.getProperty("user.dir")
-                + "src/test/resources/jsontestdata/iteration.json"), new TypeReference<List<Map<String, Object>>>() {
+                + "/src/test/resources/jsontestdata/singleDeviceIteration.json"), new TypeReference<List<Map<String, Object>>>() {
         });
 
         return list.toArray();

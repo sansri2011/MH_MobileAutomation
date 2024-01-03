@@ -4,8 +4,6 @@ import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
 import org.magellanhealth.Report.ExtentLogger;
 import org.magellanhealth.driverManager.DriverManager;
 import org.magellanhealth.utils.WaitHelpers;
@@ -14,8 +12,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-import java.time.Duration;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.magellanhealth.utils.PageActionsHelper.sendTextUsingJS;
@@ -27,95 +25,92 @@ public class RxHomePage extends NativeBasePage {
 
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='search']")
-    private static WebElement searchBtn;
+    private WebElement searchBtn;
 
 
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText")
-    private static WebElement enterInSearch;
+    private  WebElement enterInSearch;
     // @AndroidFindBy(xpath = "//*[@content-desc='Amoxicillin Trihydrate']")
     @AndroidFindBy(xpath = "//*[@content-desc='Amoxicillin']")
-    private static WebElement drugName;
+    private WebElement drugName;
 
     @AndroidFindBy(xpath = "//*[@content-desc=\"Show details\"]")
-    private static WebElement showDetailsBtn;
+    private WebElement showDetailsBtn;
 
 
     @AndroidFindBy(xpath = "//*[@content-desc='Near my location ']")
-    private static WebElement nearMyLocation;
+    private WebElement nearMyLocation;
 
     @AndroidFindBy(xpath = "//*[@class='android.widget.HorizontalScrollView']/*[@class='android.widget.Button']")
-    private static List<WebElement> pharmaciesList;
+    private List<WebElement> pharmaciesList;
     @AndroidFindBy(xpath = "//*[@content-desc=\"Show pharmacy options Near my home\"]")
-    private static WebElement showLocation;
+    private WebElement showLocation;
 
     //*[@content-desc='Show pharmacy options Near my home']
     @AndroidFindBy(xpath = "//*[@content-desc=\"Customize your 'Amoxicillin Trihydrate' search\"]")
-    private static WebElement rxFilterTitle;
+    private WebElement rxFilterTitle;
 
 
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button")
-    private static List<WebElement> medicineList;
+    private List<WebElement> medicineList;
     //[@class='android.widget.EditText']/[text()='Search for Rx name']
 
     //android.view.View[@content-desc="Filter by family member The names listed below are family members that shared their prescription data with you"]/android.view.View/android.view.View
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
-    private static WebElement filterByFamilyMember;
+    private  WebElement filterByFamilyMember;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
-    private static WebElement filterBy;
+    private WebElement filterBy;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Hunter Scott ']")
-    private static WebElement familyMemberHunterScott;
+    private WebElement familyMemberHunterScott;
 
 
     @AndroidFindBy(xpath = "//*[@class='android.view.View']/*[@class='android.widget.Button']")
-    private static List<WebElement> familyMemberList;
+    private List<WebElement> familyMemberList;
 
     @AndroidFindBy(xpath = "//*[@class='android.widget.ScrollView']/*[@class='android.widget.Button']")
     private static List<WebElement> myRxHomeDrugList;
 
     @AndroidFindBy(xpath = "//*[@content-desc='Sort by options. Currently sorting by Newest status update']")
-    private static WebElement sortByBtn;
+    private WebElement sortByBtn;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Close Search']")
-    private static WebElement searchCloseBtn;
+    private WebElement searchCloseBtn;
 
 
 //android.view.View[@content-desc="Filter by family member The names listed below are family members that shared their prescription data with you"]/android.view.View/android.view.View
 
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Rx History tab. 1 of 3. Tap to view your deductible tracker and claim history.']")
-    private static WebElement RxHistory;
+    private WebElement RxHistory;
 
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='My Rx tab. 2 of 3. Tap to manage your current and past prescriptions.']")
-    private static WebElement myRx;
+    private WebElement myRx;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='More tab. 3 of 3. Tap for settings, support and other options.']")
-    private static WebElement moreBtn;
+    private WebElement moreBtn;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc=' There are no prescriptions available yet. They will appear here once we have a prescription on file and under review. You can look up information on any medication using our search tool.']")
-    private static WebElement noPrescriptionText;
-
-//    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Dorothy Scott.']")
-//    private static WebElement filterByFamilyMember;
+    private WebElement noPrescriptionText;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Go to Rx search']")
-    private static WebElement goToRxSearch;
+    private WebElement goToRxSearch;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sort by options. Currently sorting by Newest status update']")
-    private static WebElement sortBy;
+    private WebElement sortBy;
 
     @AndroidFindBy(xpath = "//*[@class='android.view.View' and ./*[@content-desc='Alphabetically ']]/*[@class='android.widget.Button']")
-    private static List<WebElement> sortByOptions;
+    private List<WebElement> sortByOptions;
 
     @AndroidFindBy(xpath = "\t\n" + "//android.view.View[contains(@content-desc,\"Good Morning ☀\uFE0F Drink water & take your medications\"]")
-    private static WebElement greetingsMsg;
+    private WebElement greetingsMsg;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Filter options. Currently filtering by Recent Rx.']")
-    private static WebElement filterOption;
+    private WebElement filterOption;
 
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View/android.widget.ScrollView")
-    private static List<WebElement> medicinesList;
+    private List<WebElement> medicinesList;
 
-
+WaitHelpers waitHelpers = new WaitHelpers();
     public RxHomePage() {
         PageFactory.initElements(new AppiumFieldDecorator(DriverManager.getDriver()), this);
     }
@@ -183,15 +178,10 @@ public class RxHomePage extends NativeBasePage {
         click(enterInSearch, "search field");
         hideKeyboard();
         sendTextUsingJS(medicineName);
-//        boolean status = false;
-//        boolean displayed = DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=+" + medicineName + "]"))
-//                .isDisplayed();
-
 
         try {
-//            WaitHelpers.waitUntilElementToBeClickable(DriverManager.getDriver().
-//                    findElement(By.xpath("//*[@content-desc=+" + medicineName + "]")));
-            if (DriverManager.getDriver().findElement(By.xpath("//*[@content-desc="+'"'+medicineName+'"'+"]"))
+            WaitHelpers.waitTime(30);
+            if (DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=" + '"' + medicineName + '"' + "]"))
                     .isDisplayed()) {
                 ExtentLogger.pass("Drugs are available for " + medicineName + "+");
             }
@@ -201,68 +191,28 @@ public class RxHomePage extends NativeBasePage {
         return this;
     }
 
-    public void validateDrugDetailpage() {
+    public void
+    validateDrugDetailpage() {
         click(drugName, "amoxiline");
         // validateText(rxFilterTitle, "content-desc","Customize your 'Amoxicillin Trihydrate' search");
 //        String elementAttribute = rxFilterTitle.getAttribute("content-desc");
 //System.out.println(elementAttribute);
 
 
-        WaitHelpers.waitUntilElementToBeClickable(showDetailsBtn);
+        waitHelpers.waitUntilElementToBeClickable(showDetailsBtn);
         showDetailsBtn.click();
         TouchAction action = new TouchAction((PerformsTouchActions) DriverManager.getDriver());
         //DriverManager.getDriver().findElements(By.xpath("//*[@class='android.widget.HorizontalScrollView']/*[@class='android.widget.Button']")).size() == 0
 
-        WaitHelpers.waitUntilElementToBeClickable(showLocation);
+        waitHelpers.waitUntilElementToBeClickable(showLocation);
         showLocation.click();
-        WaitHelpers.waitUntilElementToBeClickable(nearMyLocation);
+        waitHelpers.waitUntilElementToBeClickable(nearMyLocation);
         nearMyLocation.click();
 
 
         horizontalScroll(pharmaciesList, 498, 1096, 206, 1086);
 
 
-//
-//        WaitHelpers.waitUntilElementToBeClickable(showDetailsBtn);
-//        TouchAction action = new TouchAction((PerformsTouchActions) DriverManager.getDriver());
-//
-//        action.longPress(LongPressOptions.longPressOptions()
-//                        .withElement(
-//                                ElementOption.element(
-//                                        DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=\"Form: Bottle of Capsules. Double tap to choose a different option. Button\"]"))
-//        element.click();
-//        element.sendKeys(Keys.ENTER);
-
-//        new TouchAction((PerformsTouchActions) DriverManager.getDriver()).longPress(LongPressOptions.longPressOptions()
-//                .withPosition(PointOption.point(416, 1012))).perform();
-
-//
-//        List<WebElement> elementList = DriverManager.getDriver().findElements(By.xpath("//*[@class=\"android.view.View\" and ./*[@content-desc=\"back\"]]/*[@class='android.view.View']/*[@class='android.view.View']"));
-//
-//        WebElement rxDetailsText = DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=\"Amoxicillin Trihydrate\"]"));
-//
-//
-//        validateText(rxDetailsText, "content-desc", "Customize your \"Amoxicillin Trihydrate\" search");
-//        for (int i = 3; i < elementList.size(); i++) {
-//            String name = elementList.get(i).getAttribute("content-desc");
-//            System.out.println(name);
-//            WebElement ele = elementList.get(i);
-//            if (ele.isEnabled()) {
-//                tapElement(ele);
-////                WebElement element = DriverManager.getDriver().findElement(By.xpath("//*[@content-desc=\"Form: Bottle of Capsules. Double tap to choose a different option. Button\"]"));
-////
-////
-////                element.click();
-////                doubleTap(element);
-//
-//            }
-//            Point loc = ele.getLocation();
-//            int x = loc.getX();
-//            int y = loc.getY();
-//
-//            tapElement(x, y);
-//            //  DriverManager.getDriver().tap(x, ele, y);
-//        }
     }
 
 
@@ -356,7 +306,7 @@ public class RxHomePage extends NativeBasePage {
                 WebElement option = sortByOptions.get(i);
                 click(option, sortByOption);
                 WaitHelpers.waitTime(5);
-                afterSortingAlpabetically = myRxHomeDrugList.stream().map(NativeBasePage::getText).collect(Collectors.toList());
+                afterSortingAlpabetically = myRxHomeDrugList.stream().map(new NativeBasePage()::getText).collect(Collectors.toList());
                 status = false;
                 break;
             } else {
@@ -378,7 +328,7 @@ public class RxHomePage extends NativeBasePage {
 
     private static List<String> actualSortedList() {
         List<WebElement> homeDrugList = myRxHomeDrugList;
-        List<String> actualList = homeDrugList.stream().map(NativeBasePage::getText).sorted().collect(Collectors.toList());
+        List<String> actualList = homeDrugList.stream().map(new NativeBasePage()::getText).sorted().collect(Collectors.toList());
         return actualList;
     }
 }

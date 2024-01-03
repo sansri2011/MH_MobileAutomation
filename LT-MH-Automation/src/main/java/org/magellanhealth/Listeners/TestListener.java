@@ -10,7 +10,7 @@ public class TestListener implements ITestListener, ISuiteListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentReport.createTest(result.getName());
+        new ExtentReport().createTest(result.getName());
 
     }
 
@@ -54,12 +54,12 @@ public class TestListener implements ITestListener, ISuiteListener {
 
     @Override
     public void onStart(ISuite iSuite) {
-        ExtentReport.initReport();
+        new ExtentReport().initReport();
     }
 
     @Override
     public void onFinish(ISuite iSuite) {
-        ExtentReport.tearDownReport();
+        new ExtentReport().tearDownReport();
 
     }
 }

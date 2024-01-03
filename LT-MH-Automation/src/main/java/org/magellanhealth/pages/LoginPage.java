@@ -16,53 +16,53 @@ import static org.magellanhealth.utils.PageActionsHelper.sendTextUsingJS;
 
 public class LoginPage extends NativeBasePage {
     @AndroidFindBy(xpath = "//*[contains(@class,'android.widget.EditText')][1]")
-    private static WebElement email;
+    private  WebElement email;
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='My Rx tab. 2 of 3. Tap to manage your current and past prescriptions.']")
-    private static WebElement myRx;
+    private WebElement myRx;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='The email address or password you have entered is invalid. Too many incorrect attempts will lock your account.']")
-    private static WebElement invalidCredentialsErrorMessage;
+    private WebElement invalidCredentialsErrorMessage;
     @AndroidFindBy(xpath = "//*[contains(@class,'android.widget.EditText')][2]")
-    private static WebElement pwd;
+    private WebElement pwd;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Forgot your password?']")
-    private static WebElement forgotPwdLink;
+    private WebElement forgotPwdLink;
 
     @AndroidFindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText")
-    private static WebElement forgotPwdFieldOnForgotPwdScreen;
+    private WebElement forgotPwdFieldOnForgotPwdScreen;
 
     @AndroidFindBy(xpath = "//hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText")
-    private static WebElement invalidEmailErrorOnForgotPwd;
+    private WebElement invalidEmailErrorOnForgotPwd;
 
     @AndroidFindBy(xpath = " //android.view.View[@content-desc='Forgot password']")
-    private static WebElement forgotPwdText;
+    private WebElement forgotPwdText;
 
     @AndroidFindBy(accessibility = "Don't have an account?,tap to Register now,")
-    private static WebElement registerNow;
+    private WebElement registerNow;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sign in']")
-    private static WebElement signIn;
+    private WebElement signIn;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Allow']")
-    private static WebElement allowBtn;
+    private WebElement allowBtn;
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Next']")
-    private static WebElement nextBtn;
+    private WebElement nextBtn;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='A better pharmacy experience']")
-    private static WebElement NextScreen1;
+    private WebElement NextScreen1;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Manage your prescriptions from anywhere']")
-    private static WebElement NextScreen2;
+    private WebElement NextScreen2;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Get the best Rx prices']")
-    private static WebElement getStartedScreen2;
+    private WebElement getStartedScreen2;
 
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Get started']")
-    private static WebElement getStarted;
+    private WebElement getStarted;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Skip tutorial']")
-    private static WebElement skipTutorial;
+    private WebElement skipTutorial;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='More tab. 3 of 3. Tap for settings, support and other options.']")
-    private static WebElement moreOptionBtn;
+    private WebElement moreOptionBtn;
 
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Yes']")
     private static WebElement yesOnSignOutPopUp;
@@ -89,6 +89,8 @@ public class LoginPage extends NativeBasePage {
     }
 
 
+    WaitHelpers waitHelpers = new WaitHelpers();
+
     public LoginPage verifyElementOnScreen() {
         onScreenFields(email.isDisplayed(), "Email field is Displayed in Sign IN screen", "Email field is not Displayed in Sign IN screen");
         onScreenFields(pwd.isDisplayed(), "Password  field is Displayed in Sign in screen", "Password  field is not Displayed in Sign in screen");
@@ -99,12 +101,12 @@ public class LoginPage extends NativeBasePage {
     }
 
     public LoginPage verifyKeyboardShownForEmail() {
-        CommonPageMethods.verifyKeyboardAppears(email, "username");
+        new CommonPageMethods().verifyKeyboardAppears(email, "username");
         return this;
     }
 
     public LoginPage verifyKeyboardShownForPassword() {
-        CommonPageMethods.verifyKeyboardAppears(pwd, "password");
+        new CommonPageMethods().verifyKeyboardAppears(pwd, "password");
         return this;
     }
 
@@ -181,7 +183,7 @@ public class LoginPage extends NativeBasePage {
 
     public LoginPage loginToApp(String username, String password) {
       //  WaitHelpers.waitTime(10);
-        WaitHelpers.waitUntilElementToBeClickable(email);
+        waitHelpers.waitUntilElementToBeClickable(email);
         enterUsername(username);
         hideKeyboard();
         enterPassword(password);
@@ -190,9 +192,9 @@ public class LoginPage extends NativeBasePage {
         signIn.click();
         ExtentLogger.pass("User logged in successfully");
        // WaitHelpers.waitTime(30);
-        WaitHelpers.waitUntilElementToBeClickable(skipTutorial);
+        waitHelpers.waitUntilElementToBeClickable(skipTutorial);
         skipTutorial.click();
-        WaitHelpers.waitUntilElementToBeClickable(myRx);
+        waitHelpers.waitUntilElementToBeClickable(myRx);
         ExtentLogger.pass("Tutorial skipped in successfully");
         return this;
     }
@@ -440,14 +442,14 @@ public class LoginPage extends NativeBasePage {
         return this;
     }
 
-    private static void clickOnSignOut() {
+    private void clickOnSignOut() {
         scrollForMobile(signOutBtn);
         click(signOutBtn, "sign out");
         click(yesOnSignOutPopUp, "yes btn on sign out confirmation pop up");
         WaitHelpers.waitTime(10);
     }
 
-    private static void verifyUsernameDisplayed() {
+    private void verifyUsernameDisplayed() {
         WaitHelpers.waitTime(20);
         if (homePageElement.isDisplayed()) {
             ExtentLogger.info("User landed in MyRx Screen");

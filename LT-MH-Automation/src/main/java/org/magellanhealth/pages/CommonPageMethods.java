@@ -8,7 +8,7 @@ import org.testng.Assert;
 
 public class CommonPageMethods extends NativeBasePage {
 
-    public static void verifyKeyboardAppears(WebElement element, String name) {
+    public  void verifyKeyboardAppears(WebElement element, String name) {
         if (element.isDisplayed()) {
             try {
                 click(element, name);

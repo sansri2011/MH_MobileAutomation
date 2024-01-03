@@ -27,9 +27,9 @@ import java.util.Set;
 
 class NativeBasePage {
 
-    protected static void click(WebElement element, String elementName) {
+    protected  void click(WebElement element, String elementName) {
         //   scrollToElement(element);
-        WaitHelpers.waitUntilElementToBeClickable(element);
+        new WaitHelpers().waitUntilElementToBeClickable(element);
         if (element.isEnabled()) {
 
             // WaitHelpers.waitTime(5);
@@ -54,9 +54,9 @@ class NativeBasePage {
     }
 
 
-    public static final String getText(WebElement element) {
+    public final String getText(WebElement element) {
         String attributeText = "";
-        WaitHelpers.waitUntilElementToBeClickable(element);
+        new WaitHelpers().waitUntilElementToBeClickable(element);
         try {
             if (element.isDisplayed()) {
                 attributeText = element.getAttribute("content-desc");
@@ -70,7 +70,7 @@ class NativeBasePage {
         return attributeText;
     }
 
-    public static void enterTextByJS(WebElement element, String text) {
+    public void enterTextByJS(WebElement element, String text) {
         try {
             element.clear();
             JavascriptExecutor executor = (JavascriptExecutor) DriverManager.getDriver();
@@ -92,13 +92,13 @@ class NativeBasePage {
     }
 
 
-    public static void hideKeyboard() {
+    public  void hideKeyboard() {
         AndroidDriver driver;
         driver = (AndroidDriver) DriverManager.getDriver();
         driver.hideKeyboard();
     }
 
-    protected static void navigateBackward(WebElement validateTextAfterMovingBack, String pageName, Boolean navigateBackTrueFalse) {
+    protected void navigateBackward(WebElement validateTextAfterMovingBack, String pageName, Boolean navigateBackTrueFalse) {
         if (navigateBackTrueFalse) {
             DriverManager.getDriver().navigate().back();
         } else {
@@ -111,7 +111,7 @@ class NativeBasePage {
         }
     }
 
-    public static void validateElement(WebElement elementToValidate, String elementName) {
+    public void validateElement(WebElement elementToValidate, String elementName) {
         scrollToElement(elementToValidate);
         if (elementToValidate.isDisplayed() && elementToValidate.isEnabled()) {
             ExtentLogger.pass(elementName + " displayed and enable on the page");
@@ -120,7 +120,7 @@ class NativeBasePage {
         }
     }
 
-    public static void validateText(WebElement element, String attributeName, String expectedTextToBeDisplayed) {
+    public void validateText(WebElement element, String attributeName, String expectedTextToBeDisplayed) {
         try {
             scrollToElement(element);
             if (element.isDisplayed()) {
@@ -135,7 +135,7 @@ class NativeBasePage {
         }
     }
 
-    public static void scrollToElement(WebElement elementLocator) {
+    public void scrollToElement(WebElement elementLocator) {
         int maxScrolls = 5;  // Adjust this based on your needs
         int scrolls = 0;
 
@@ -162,14 +162,14 @@ class NativeBasePage {
         }
     }
 
-    public static void tapElement(int x, int y) {
+    public void tapElement(int x, int y) {
         AndroidDriver driver;
         driver = (AndroidDriver) DriverManager.getDriver();
         TouchAction<?> action = new TouchAction<>(driver);
 
     }
 
-    public static void tapElement(WebElement element) {
+    public void tapElement(WebElement element) {
 
         try {
             AndroidDriver androidDriver = (AndroidDriver) DriverManager.getDriver();
@@ -190,7 +190,7 @@ class NativeBasePage {
     }
 
 
-    public static void doubleTap(WebElement element) {
+    public void doubleTap(WebElement element) {
         TouchAction touchAction = new TouchAction((PerformsTouchActions) DriverManager.getDriver());
 
         // Perform the double tap
@@ -203,7 +203,7 @@ class NativeBasePage {
         Set<String> set = new LinkedHashSet<>();
         for (int i = 0; i <= 15; i++) {
             for (WebElement ls : list) {
-                String replaced = getText(ls);
+                String replaced = new NativeBasePage().getText(ls);
                 set.add(replaced);
                 new TouchAction((PerformsTouchActions) DriverManager.getDriver())
                         .press(PointOption.point(xOffset1, yOffSet1))

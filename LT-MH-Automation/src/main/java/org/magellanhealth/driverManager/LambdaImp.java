@@ -25,7 +25,7 @@ public class LambdaImp implements IDriver {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         map.put("w3c", String.valueOf(true));
         map.put("build", "MagellanHealth Android script test");
-        map.put(MobileCapabilityType.DEVICE_NAME, PropertyUtils.getValue("deviceName"));
+        map.put("deviceName",map.get("deviceName") );//PropertyUtils.getValue("deviceName"));
         map.put(MobileCapabilityType.AUTOMATION_NAME, "uiAutomator2");
         map.put(MobileCapabilityType.PLATFORM_NAME, "Android");
         map.put(MobileCapabilityType.PLATFORM_VERSION, "13");
