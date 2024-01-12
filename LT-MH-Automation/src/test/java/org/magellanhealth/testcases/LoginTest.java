@@ -22,13 +22,26 @@ public class LoginTest extends BaseTest {
         new LoginPage().verifyElementOnScreen()
                 .verifyKeyboardShownForEmail()
                 .verifyKeyboardShownForPassword()
-                .enterUsername(PropertyUtils.getValue("appUsername7"))
-                .enterPassword(PropertyUtils.getValue("appPassword7"))
+                .enterUsername(PropertyUtils.getValue("appUsername1"))
+                .enterPassword(PropertyUtils.getValue("appPassword1"))
+
                 .clickSignIn()
                 .clickAndValidateNextScreen()
                 .clickAndValidateGetStartedScreen();
 
     }
+    @Test(groups = "LoginTest", dataProvider = "getData1",
+            description = "Verify and validate Email field allows only 50 characters", enabled = false)
+    public void usernameAccept50char(Map<String, String> map) {
+        new LoginPage().verifyEmailIdAccept50Char();
+    }
+
+    @Test(groups = "LoginTest", dataProvider = "getData1", enabled = false,
+            description = "Invalid test case - Verify Sign in with Invalid Email address")
+    public void InvalidEmailTest(Map<String, String> map) {
+        new LoginPage().invalidEmailId("shaalini");
+    }
+
 
 
     @DataProvider(parallel = false)

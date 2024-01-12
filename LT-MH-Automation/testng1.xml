@@ -3,6 +3,7 @@
 <suite name="Mobile Tests">
     <listeners>
         <listener class-name="org.magellanhealth.Listeners.TestListener"/>
+        <listener class-name="org.magellanhealth.Listeners.AnnotationTransformer"/>
     </listeners>
 
     <test name="Test cases" parallel="methods" thread-count="3">

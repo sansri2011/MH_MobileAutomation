@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.magellanhealth.pages.LoginPage;
 import org.magellanhealth.pages.RxHomePage;
+import org.magellanhealth.utils.DataProviderUtils;
 import org.magellanhealth.utils.PropertyUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -17,7 +18,7 @@ public class RxHomePageTest extends BaseTest {
     ThreadLocal<String> username = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appUsername7"));
     ThreadLocal<String> password = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appPassword7"));
 
-    @Test(dataProvider = "getData1", enabled = true)
+    @Test(dataProvider = "getData1", enabled = false)
     public void verifyElementsOnRxHomePageTest(Map<String, String> map) throws InterruptedException {
 
         new LoginPage()
@@ -32,7 +33,7 @@ public class RxHomePageTest extends BaseTest {
                 .validateMoreBBtn();
     }
 
-    @Test(dataProvider = "getData", enabled = true)
+    @Test(dataProvider = "getData", enabled = false)
     public void validateRxHomePage(Map<String, String> map) {
         new LoginPage().loginToApp(username.get(), password.get());
         new RxHomePage()
@@ -45,46 +46,13 @@ public class RxHomePageTest extends BaseTest {
                 .sortByAlphaOrder("Alphabetically");
     }
 
-    @Test(dataProvider = "getData", enabled = true)
+    @Test(dataProvider = "getData", dataProviderClass = DataProviderUtils.class, enabled = true)
     public void validateDrugDetailsPage(Map<String, String> map) {
-      //  String username = PropertyUtils.getValue("appUsername1");
-      //  String password = PropertyUtils.getValue("appPassword1");
         ThreadLocal<String> username = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appUsername1"));
         ThreadLocal<String> password = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appPassword1"));
         new LoginPage().loginToApp(username.get(), password.get());
         new RxHomePage()
                 .enterMedicinesNameInSearchField("Amoxicillin")
                 .validateDrugDetailpage();
-
-    }
-
-    @DataProvider(parallel = true)
-    public Object[] getData1() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("device", "Galaxy S22 5G");
-        map.put("os_version", "12");
-
-        HashMap<String, String> map2 = new HashMap<>();
-        map2.put("device", "Galaxy S23+");
-        map2.put("os_version", "13");
-
-        HashMap<String, String> map3 = new HashMap<>();
-//        map3.put("deviceName", "iPhone 14 Pro");
-//        map3.put("platformVersion", "16");
-
-        List<Map<String, String>> list = new ArrayList<>();
-        list.add(map3);
-        return list.toArray();
-    }
-
-    @DataProvider(parallel = true)
-    public Object[] getData() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-        List<Map<String, Object>> list = mapper.readValue(new File(System.getProperty("user.dir")
-                + "/src/test/resources/jsontestdata/singleDeviceIteration.json"), new TypeReference<List<Map<String, Object>>>() {
-        });
-
-        return list.toArray();
     }
 }

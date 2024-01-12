@@ -111,7 +111,7 @@ public class LoginPage extends NativeBasePage {
     }
 
     public ForgotPasswordPage verifyEmailIdAccept50Char() {
-        String expected = "Myr98lgD0jPqTzqMhKm2JEItOk6YDxDJxaYigLbWHlYXbj4we";
+        String expected = "/Myr98lgD0jPqTzqMhKm2JEItOk6YDxDJxaYigLbWHlYXbj4we/";
 
         click(email, "username");
         sendTextUsingJS(expected);
