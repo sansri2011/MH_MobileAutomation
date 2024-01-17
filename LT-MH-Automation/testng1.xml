@@ -6,10 +6,11 @@
         <listener class-name="org.magellanhealth.Listeners.AnnotationTransformer"/>
     </listeners>
 
-    <test name="Test cases" parallel="methods" thread-count="3">
+    <test name="Test cases" parallel="methods" thread-count="5">
         <classes>
             <class name="org.magellanhealth.testcases.ForgotPasswordTest"/>
             <class name="org.magellanhealth.testcases.LoginTest"/>
+            <class name="org.magellanhealth.testcases.LoginPageTest"/>
             <class name="org.magellanhealth.testcases.RxHomePageTest"/>
             <class name="org.magellanhealth.testcases.MoreTabTest"/>
             <class name="org.magellanhealth.testcases.SignUpTest">

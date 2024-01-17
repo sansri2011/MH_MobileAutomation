@@ -12,12 +12,11 @@ public class RxHomePageTest extends BaseTest {
     ThreadLocal<String> username = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appUsername7"));
     ThreadLocal<String> password = ThreadLocal.withInitial(() -> PropertyUtils.getValue("appPassword7"));
 
-    @Test(dataProvider = "getData1", enabled = false)
-    public void verifyElementsOnRxHomePageTest(Map<String, String> map) throws InterruptedException {
 
+    @Test(dataProvider = "getData", dataProviderClass = DataProviderUtils.class, enabled = true)
+    public void verifyElementsOnRxHomePageTest(Map<String, String> map) throws InterruptedException {
         new LoginPage()
                 .loginToApp(username.get(), password.get());
-
         new RxHomePage().checkUsernameDisplayOnRxHomePage()
                 .validateFilterby()
                 .validateSearchBtn()
@@ -27,7 +26,7 @@ public class RxHomePageTest extends BaseTest {
                 .validateMoreBBtn();
     }
 
-    @Test(dataProvider = "getData", enabled = false)
+    @Test(dataProvider = "getData", dataProviderClass = DataProviderUtils.class, enabled = true)
     public void validateRxHomePage(Map<String, String> map) {
         new LoginPage().loginToApp(username.get(), password.get());
         new RxHomePage()

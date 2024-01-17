@@ -2,6 +2,7 @@ package org.magellanhealth.testcases;
 
 import org.magellanhealth.pages.ForgotPasswordPage;
 import org.magellanhealth.pages.LoginPage;
+import org.magellanhealth.utils.DataProviderUtils;
 import org.magellanhealth.utils.PropertyUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 public class ForgotPasswordTest extends BaseTest {
 
-    @Test(groups = "SmokeTest", dataProvider = "getData1",
+    @Test(groups = "SmokeTest",dataProvider = "getData", dataProviderClass = DataProviderUtils.class,
             description = "Verify login page", enabled = false)
     public void verifyForgotPasswordScreen(Map<String, String> map) {
         String username = PropertyUtils.getValue("appUsername");
@@ -27,21 +28,4 @@ public class ForgotPasswordTest extends BaseTest {
     }
 
 
-    @DataProvider(parallel = false)
-    public Object[] getData1() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("device", "Galaxy S22 5G");
-        map.put("os_version", "12");
-
-        HashMap<String, String> map2 = new HashMap<>();
-
-
-        HashMap<String, String> map3 = new HashMap<>();
-//        map3.put("deviceName", "iPhone 14 Pro");
-//        map3.put("platformVersion", "16");
-
-        List<Map<String, String>> list = new ArrayList<>();
-        list.add(map2);
-        return list.toArray();
-    }
 }

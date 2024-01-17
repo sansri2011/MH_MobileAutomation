@@ -60,6 +60,5 @@ public class TestListener implements ITestListener, ISuiteListener {
     @Override
     public void onFinish(ISuite iSuite) {
         new ExtentReport().tearDownReport();
-
     }
 }
